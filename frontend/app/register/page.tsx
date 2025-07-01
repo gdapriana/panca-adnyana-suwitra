@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, LogIn } from "lucide-react";
 import { useAuthContext } from "@/context/auth-context";
 import { redirect } from "next/navigation";
-import {toast} from "sonner";
+import { toast } from "sonner";
 import Link from "next/link";
 
 export default function Register() {
@@ -56,7 +56,10 @@ export default function Register() {
     <main className="w-full h-dvh flex justify-center items-center bg-background">
       <div className="flex flex-col justify-center items-stretch w-full max-w-md m-4">
         <div className="flex justify-center items-center">
-          Sudah mempunyai akun? <Button variant="link" asChild><Link href="/login">Masuk</Link></Button>
+          Sudah mempunyai akun?{" "}
+          <Button variant="link" asChild>
+            <Link href="/login">Masuk</Link>
+          </Button>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -130,7 +133,6 @@ export default function Register() {
                 className="flex-1"
               />
             </Label>
-
           </div>
           <Button
             type="submit"

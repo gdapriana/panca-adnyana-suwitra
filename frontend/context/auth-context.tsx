@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { Role } from "@/types/role";
-import {User} from "@/lib/types";
+import { User } from "@/lib/types";
 
 interface AuthContextType {
   authenticated: boolean;
@@ -67,6 +67,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
     setAuthenticated(false);
     setRole(null);
+    setUser(null);
+    window.location.reload();
   };
 
   return (

@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Eye, LogIn } from "lucide-react";
 import { useAuthContext } from "@/context/auth-context";
 import { redirect } from "next/navigation";
-import {toast} from "sonner";
+import { toast } from "sonner";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export default function Login() {
   const { authenticated, loading, login } = useAuthContext();
@@ -18,7 +19,6 @@ export default function Login() {
   const [typePassword, setTypePassword] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export default function Login() {
       toast.error(JSON.stringify(data.errors));
     } else {
       login(data.data.token);
-      redirect("/");
+      window.location.replace('/');
     }
   };
 
@@ -46,7 +46,10 @@ export default function Login() {
     <main className="w-full h-dvh flex justify-center items-center bg-background">
       <div className="flex flex-col justify-center items-stretch w-full max-w-md m-4">
         <div className="flex justify-center items-center">
-          Belum mempunyai akun? <Button variant="link" asChild><Link href="/register">Daftar</Link></Button>
+          Belum mempunyai akun?{" "}
+          <Button variant="link" asChild>
+            <Link href="/register">Daftar</Link>
+          </Button>
         </div>
         <form
           onSubmit={handleSubmit}

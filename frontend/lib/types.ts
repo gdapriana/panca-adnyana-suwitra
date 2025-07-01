@@ -30,6 +30,7 @@ export interface User {
   treasurerStt: Stt[];
   secretaryStt: Stt[];
   blog_comments: BlogComment[];
+  Join_request: JoinRequest[];
 
   _count?: {
     leadStt: number;
@@ -37,6 +38,7 @@ export interface User {
     treasurerStt: number;
     secretaryStt: number;
     blog_comments: number;
+    Join_request: number;
   };
 }
 
@@ -62,16 +64,17 @@ export interface Stt {
   stt_membership: SttMembership[];
   events: Event[];
   blogs: Blog[];
-
   leader?: User;
   vice?: User;
   treasurer?: User;
   secretary?: User;
+  Join_request: JoinRequest[];
 
   _count?: {
     stt_membership: number;
     events: number;
     blogs: number;
+    Join_request: number;
   };
 }
 
@@ -153,5 +156,20 @@ export interface Event {
   description?: string;
 
   stt_slug: string;
+  stt: Stt;
+}
+
+export interface JoinRequest {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+
+  username: string;
+  stt_slug: string;
+  request_date: Date;
+  acc_date?: Date;
+  is_acc: boolean;
+
+  user: User;
   stt: Stt;
 }

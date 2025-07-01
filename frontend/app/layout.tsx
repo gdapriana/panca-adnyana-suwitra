@@ -3,7 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/context/auth-context";
 import { DM_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
-import {Toaster} from "sonner";
+import { Toaster } from "sonner";
 
 const font = DM_Sans({ subsets: ["latin"] });
 

@@ -31,6 +31,7 @@ model User {
   treasurerStt  Stt[]          @relation("TreasurerRelation")
   secretaryStt  Stt[]          @relation("SecretaryRelation")
   blog_comments Blog_comment[]
+  Join_request  Join_request[]
 
   @@map("users")
 }
@@ -61,6 +62,7 @@ model Stt {
   vice           User?            @relation("ViceRelation", fields: [vice_username], references: [username])
   treasurer      User?            @relation("TreasurerRelation", fields: [treasurer_username], references: [username])
   secretary      User?            @relation("SecretaryRelation", fields: [secretary_username], references: [username])
+  Join_request   Join_request[]
 
   @@map("stt")
 }
@@ -146,6 +148,21 @@ model Event {
   stt      Stt    @relation(fields: [stt_slug], references: [slug])
 
   @@map("events")
+}
+
+model Join_request {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  username     String
+  stt_slug     String
+  request_date DateTime  @default(now())
+  acc_date     DateTime?
+  is_acc       Boolean   @default(false)
+
+  user User @relation(fields: [username], references: [username])
+  stt  Stt  @relation(fields: [stt_slug], references: [slug])
 }
 
 enum ROLE {
