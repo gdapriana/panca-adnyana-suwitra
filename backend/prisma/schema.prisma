@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  username        String          @unique
+  email           String
+  password        String
+  token           String?
+  name            String?
+  stt_membership  Stt_membership?
+  whatsapp_url    String?
+  instagram_url   String?
+  facebook_url    String?
+  profile_img_url String?
+
+  role ROLE @default(USER)
+
+  leadStt       Stt[]          @relation("LeaderRelation")
+  viceStt       Stt[]          @relation("ViceRelation")
+  treasurerStt  Stt[]          @relation("TreasurerRelation")
+  secretaryStt  Stt[]          @relation("SecretaryRelation")
+  blog_comments Blog_comment[]
+
+  @@map("users")
+}
+
+model Stt {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  name               String
+  slug               String  @unique
+  leader_username    String?
+  vice_username      String?
+  treasurer_username String?
+  secretary_username String?
+  logo_url           String?
+  description        String?
+  email              String?
+  instagram_url      String?
+  whatsapp_url       String?
+  facebook_url       String?
+  is_main            Boolean @default(false)
+
+  stt_membership Stt_membership[]
+  events         Event[]
+  blogs          Blog[]
+  leader         User?            @relation("LeaderRelation", fields: [leader_username], references: [username])
+  vice           User?            @relation("ViceRelation", fields: [vice_username], references: [username])
+  treasurer      User?            @relation("TreasurerRelation", fields: [treasurer_username], references: [username])
+  secretary      User?            @relation("SecretaryRelation", fields: [secretary_username], references: [username])
+
+  @@map("stt")
+}
+
+model Blog {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  name          String
+  slug          String  @unique
+  category_slug String?
+  cover_url     String?
+  description   String?
+  body          String?
+  stt_slug      String?
+
+  category      Blog_category? @relation(fields: [category_slug], references: [slug])
+  stt           Stt?           @relation(fields: [stt_slug], references: [slug])
+  blog_comments Blog_comment[]
+
+  @@map("blogs")
+}
+
+model Blog_comment {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  blog_slug String
+  username  String
+  body      String?
+
+  blog Blog @relation(fields: [blog_slug], references: [slug])
+  user User @relation(fields: [username], references: [username])
+
+  @@map("blog_comments")
+}
+
+model Blog_category {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  name String
+  slug String @unique
+
+  blogs Blog[]
+
+  @@map("blog_categories")
+}
+
+model Stt_membership {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  stt_slug  String
+  username  String    @unique
+  join_date DateTime  @default(now())
+  end_date  DateTime?
+
+  stt       Stt?        @relation(fields: [stt_slug], references: [slug])
+  user      User        @relation(fields: [username], references: [username])
+  is_active Boolean     @default(true)
+  role      MEMBER_ROLE @default(MEMBER)
+
+  @@map("stt_membership")
+}
+
+model Event {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  slug        String    @unique
+  name        String
+  start_date  DateTime?
+  end_date    DateTime?
+  description String?
+
+  stt_slug String
+  stt      Stt    @relation(fields: [stt_slug], references: [slug])
+
+  @@map("events")
+}
+
+enum ROLE {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
+enum MEMBER_ROLE {
+  MEMBER
+  LEADER
+  VICE
+  TREASURES
+  SECRETARY
+}
