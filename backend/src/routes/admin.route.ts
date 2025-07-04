@@ -73,4 +73,12 @@ adminRoute.get(
     JoinRequestController.gets
 )
 
+// delete join req
+adminRoute.delete(
+    '/api/accjoin/:id',
+    userMiddleware,
+    adminMiddleware,
+    JoinRequestController.delete
+)
+
 export default adminRoute;

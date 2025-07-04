@@ -1,5 +1,7 @@
 import prismaClient from "../application/database";
 import ResponseError from "../error/response.error";
+import {User} from "@prisma/client";
+import {UserRequest} from "../types/user.types";
 
 class JoinRequestService {
     static async gets(from_stt: string) {
@@ -33,7 +35,10 @@ class JoinRequestService {
                     select: {
                         name: true
                     }
-                }
+                },
+            },
+            orderBy: {
+                created_at: 'desc'
             }
         })
         return joinRequests;
@@ -49,7 +54,7 @@ class JoinRequestService {
             }
         })
 
-        if (!userCheck) throw new ResponseError(404, "user not found")
+        if (!userCheck) throw new ResponseError(404, "user tidak ditemukan")
 
         const sttCheck = await prismaClient.stt.findUnique({
             where: {
@@ -60,7 +65,7 @@ class JoinRequestService {
                 is_main: true
             }
         })
-        if (!sttCheck) throw new ResponseError(404, "stt not found")
+        if (!sttCheck) throw new ResponseError(404, "stt tidak ditemukan")
 
         const joinCheck = await prismaClient.join_request.findFirst({
             where: {
@@ -71,10 +76,10 @@ class JoinRequestService {
             }
         })
 
-        if (joinCheck) throw new ResponseError(401, "already join request")
+        if (joinCheck) throw new ResponseError(401, "sudah melakukan permintaan")
 
-        if (sttCheck.is_main) throw new ResponseError(401, "not alowed")
-        if (userCheck.stt_membership) throw new ResponseError(401, "already member")
+        if (sttCheck.is_main) throw new ResponseError(401, "tidak dapat izin")
+        if (userCheck.stt_membership) throw new ResponseError(401, "sudah menjadi anggota")
         const joinRequest = await prismaClient.join_request.create({
             data: {
                 username,
@@ -108,10 +113,10 @@ class JoinRequestService {
                 }
             }
         })
-        if (!joinRequest) throw new ResponseError(404, "not found")
-        if (joinRequest.stt_slug !== admin_stt) throw new ResponseError(401, "not alowed")
-        if (joinRequest.user.stt_membership) throw new ResponseError(401, 'already member')
-        if (joinRequest.is_acc) throw new ResponseError(401, "already acc")
+        if (!joinRequest) throw new ResponseError(404, "request tidak ditemukan")
+        if (joinRequest.stt_slug !== admin_stt) throw new ResponseError(401, "tidak diizinkan")
+        if (joinRequest.user.stt_membership) throw new ResponseError(401, 'sudah menjadi anggota')
+        if (joinRequest.is_acc) throw new ResponseError(401, "sudah disetujui")
         const acc = await prismaClient.join_request.update({
             where: {
                 id: req_id
@@ -133,6 +138,29 @@ class JoinRequestService {
         })
 
         return acc
+    }
+    static async delete(id: string, req: UserRequest) {
+        const joinRequest = await prismaClient.join_request.findUnique({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+                stt_slug: true
+            }
+        })
+        if (req.user!.role !== 'ADMIN') throw new ResponseError(401, "tidak diizinkan")
+        if (!joinRequest) throw new ResponseError(404, "request tidak ditemukan")
+        if (req.user?.stt_membership!.stt_slug !== joinRequest.stt_slug) throw new ResponseError(401, "tidak diizinkan")
+        const deleteJoinRequest = await prismaClient.join_request.delete({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+            }
+        })
+        return deleteJoinRequest
     }
 }
 

@@ -5,7 +5,12 @@ export interface Navigation {
 }
 
 export type Role = "USER" | "ADMIN" | "SUPERADMIN";
-export type MemberRole = "MEMBER" | "LEADER" | "VICE" | "TREASURES" | "SECRETARY";
+export type MemberRole =
+  | "MEMBER"
+  | "LEADER"
+  | "VICE"
+  | "TREASURES"
+  | "SECRETARY";
 
 export interface User {
   id: string;

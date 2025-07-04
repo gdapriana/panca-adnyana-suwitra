@@ -13,8 +13,9 @@ import { toast } from "sonner";
 import { useAuthContext } from "@/context/auth-context";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import {Trash} from "lucide-react";
 
-export default function AccDialog({
+export default function DeleteDialog({
   request,
   token,
 }: {
@@ -24,16 +25,17 @@ export default function AccDialog({
   const { authenticated } = useAuthContext();
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const handleAccept = async () => {
+  const handleDelete = async () => {
     if (!authenticated) {
       redirect("/login");
     }
 
     try {
+      setButtonDisabled(true);
       const req = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/accjoin/${request.id}`,
         {
-          method: "PATCH",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             "X-API-TOKEN": token!,
@@ -44,11 +46,13 @@ export default function AccDialog({
       if (!req.ok) {
         toast.error(JSON.stringify(res.errors));
       } else {
-        toast.success("berhasil menyetujui pengajuan");
+        toast.success("berhasil dihapus");
         window.location.reload();
       }
     } catch (error) {
       toast.error("terjadi kesalahan saat mengirim permintaan.");
+      setButtonDisabled(false);
+    } finally {
       setButtonDisabled(false);
     }
   };
@@ -57,25 +61,23 @@ export default function AccDialog({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          disabled={request.is_acc || !!request.user.stt_membership}
+          disabled={buttonDisabled}
           size="sm"
           className="cursor-pointer"
         >
-          Setujui
+          <Trash />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
-        <AlertDialogTitle>
-          Setujui {request.username} sebagai anggota STT {request.stt.name}?
-        </AlertDialogTitle>
+        <AlertDialogTitle>Hapus permintaan?</AlertDialogTitle>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={buttonDisabled}>Batal</AlertDialogCancel>
           <AlertDialogAction
             disabled={buttonDisabled}
             className="cursor-pointer"
-            onClick={handleAccept}
+            onClick={handleDelete}
           >
-            Setujui
+            Hapus
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

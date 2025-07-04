@@ -15,11 +15,10 @@ import {
 import { Stt } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {useAuthContext} from "@/context/auth-context";
-import ReqDialog from "@/app/_components/header/req-dialog";
+import { useAuthContext } from "@/context/auth-context";
+import { ChevronRight } from "lucide-react";
 
 export default function Navigation({ stt }: { stt: Stt[] }) {
-  const { authenticated, role, user } = useAuthContext();
   return (
     <NavigationMenu className="hidden md:flex" viewport={false}>
       <NavigationMenuList>
@@ -50,6 +49,11 @@ export default function Navigation({ stt }: { stt: Stt[] }) {
                   </div>
                 </ListItem>
               ))}
+              <Button className="mt-auto cursor-pointer" asChild>
+                <Link href="/stt">
+                  Lihat semua STT <ChevronRight />
+                </Link>
+              </Button>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -65,7 +69,7 @@ export default function Navigation({ stt }: { stt: Stt[] }) {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/docs">Event</Link>
+            <Link href="/event">Event</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

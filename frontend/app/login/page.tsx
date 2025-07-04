@@ -9,7 +9,7 @@ import { useAuthContext } from "@/context/auth-context";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const { authenticated, loading, login } = useAuthContext();
@@ -38,7 +38,7 @@ export default function Login() {
       toast.error(JSON.stringify(data.errors));
     } else {
       login(data.data.token);
-      window.location.replace('/');
+      window.location.replace("/");
     }
   };
 

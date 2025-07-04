@@ -1,4 +1,4 @@
-import {JoinRequest} from "@/lib/types";
+import { JoinRequest } from "@/lib/types";
 import {
   Table,
   TableBody,
@@ -8,14 +8,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import moment from "moment";
-import {Badge} from "@/components/ui/badge";
-import {Button} from "@/components/ui/button";
-import {Trash} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 import AccDialog from "@/app/(root)/request/_components/acc-dialog";
+import DeleteDialog from "@/app/(root)/request/_components/delete-dialog";
 
-export default function RequestTable({requests, token}: { requests: JoinRequest[]; token: string | undefined}) {
+export default function RequestTable({
+  requests,
+  token,
+}: {
+  requests: JoinRequest[];
+  token: string | undefined;
+}) {
   return (
     <Table>
       <TableHeader>
@@ -28,27 +35,32 @@ export default function RequestTable({requests, token}: { requests: JoinRequest[
         </TableRow>
       </TableHeader>
       <TableBody>
-        { requests.map((request: JoinRequest, index: number) => {
+        {requests.map((request: JoinRequest, index: number) => {
           return (
             <TableRow key={index}>
               <TableCell className="font-medium">{request.username}</TableCell>
               <TableCell>{request.user.name}</TableCell>
-              <TableCell>{moment(request.request_date).format("DD MMMM YYYY")}</TableCell>
+              <TableCell>
+                {moment(request.request_date).format("DD MMMM YYYY")}
+              </TableCell>
               <TableCell>
                 {request.is_acc ? (
-                  <Badge className="bg-green-500">Telah Disetujui pada { moment(request.acc_date).format("DD/MM/YYYY") }</Badge>
-                ): (
+                  <Badge className="bg-green-500">
+                    Telah Disetujui pada{" "}
+                    {moment(request.acc_date).format("DD/MM/YYYY")}
+                  </Badge>
+                ) : (
                   <Badge variant="secondary">Belum Disetujui</Badge>
                 )}
               </TableCell>
               <TableCell className=" flex justify-center items-center gap-1">
                 <AccDialog request={request} token={token} />
-                <Button size="sm" className="cursor-pointer"><Trash /></Button>
+                <DeleteDialog request={request} token={token} />
               </TableCell>
             </TableRow>
-          )
-        } )}
+          );
+        })}
       </TableBody>
     </Table>
-  )
+  );
 }

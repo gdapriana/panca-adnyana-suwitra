@@ -3,7 +3,16 @@
 import { useAuthContext } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {Calendar, Images, ListCheck, LogIn, LogOut, Plus, User2, Users} from "lucide-react";
+import {
+  Calendar,
+  Images,
+  ListCheck,
+  LogIn,
+  LogOut,
+  Plus,
+  User2,
+  Users,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -32,13 +41,19 @@ export default function Profile() {
   if (authenticated) return <Dropdown user={user} logout={logout} />;
 }
 
-const Dropdown = ({ user, logout }: { user: User | null; logout:() => void }) => {
+const Dropdown = ({
+  user,
+  logout,
+}: {
+  user: User | null;
+  logout: () => void;
+}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className="bg-secondary cursor-pointer p-1 md:p-2 md:pr-4 gap-2 flex justify-center items-center rounded-full">
           <Avatar>
-            <AvatarImage src={user?.profile_img_url} />
+            <AvatarImage className="object-cover" src={user?.profile_img_url} />
             <AvatarFallback className="bg-muted-foreground/20 flex justify-center items-center font-bold text-muted-foreground">
               {user?.username.charAt(0)}
             </AvatarFallback>
@@ -73,7 +88,6 @@ const Dropdown = ({ user, logout }: { user: User | null; logout:() => void }) =>
             </DropdownMenuItem>
           )}
 
-
           {(user?.role === "ADMIN" || user?.role === "SUPERADMIN") && (
             <>
               <DropdownMenuItem asChild>
@@ -85,7 +99,7 @@ const Dropdown = ({ user, logout }: { user: User | null; logout:() => void }) =>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/stt" className="cursor-pointer">
+                <Link href="/event/create" className="cursor-pointer">
                   Buat Event
                   <DropdownMenuShortcut>
                     <Calendar />
@@ -118,7 +132,11 @@ const Dropdown = ({ user, logout }: { user: User | null; logout:() => void }) =>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={logout} className="cursor-pointer" variant="destructive">
+          <DropdownMenuItem
+            onClick={logout}
+            className="cursor-pointer"
+            variant="destructive"
+          >
             Logout
             <DropdownMenuShortcut>
               <LogOut />

@@ -35,6 +35,15 @@ class JoinRequestController {
             next(e);
         }
     }
+    static async delete(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params
+            const response = await JoinRequestService.delete(id, req)
+            res.status(200).json({ data: response });
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 export default JoinRequestController;
