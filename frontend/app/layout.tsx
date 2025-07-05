@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("", font.className)}>
+      <body className={cn("", font.className)} suppressHydrationWarning>
         <AuthProvider>
           {children}
           <Toaster position="bottom-right" />

@@ -63,9 +63,9 @@ export default function PageEvent({ stt }: { stt: Stt }) {
             className="w-full"
             defaultValue="item-1"
           >
-            {currentEvent.map((event: Event, index) => {
+            {currentEvent.map((event: Event, index: number) => {
               return (
-                <AccordionItem value={`item-${index + 1}`}>
+                <AccordionItem key={index} value={`item-${index + 1}`}>
                   <AccordionTrigger>
                     <h1 className="font-bold text-lg">
                       {event.name} |
@@ -99,9 +99,9 @@ export default function PageEvent({ stt }: { stt: Stt }) {
             className="w-full"
             defaultValue="item-1"
           >
-            {upcomingEvent.map((event: Event, index) => {
+            {upcomingEvent.map((event: Event, index: number) => {
               return (
-                <AccordionItem value={`item-${index + 1}`}>
+                <AccordionItem key={index} value={`item-${index + 1}`}>
                   <AccordionTrigger>
                     <h1 className="font-bold text-lg">
                       {event.name} |
@@ -135,9 +135,9 @@ export default function PageEvent({ stt }: { stt: Stt }) {
             className="w-full"
             defaultValue="item-1"
           >
-            {pastEvent.map((event: Event, index) => {
+            {pastEvent.map((event: Event, index: number) => {
               return (
-                <AccordionItem value={`item-${index + 1}`}>
+                <AccordionItem key={index} value={`item-${index + 1}`}>
                   <AccordionTrigger>
                     <h1 className="font-bold text-lg">
                       {event.name} |

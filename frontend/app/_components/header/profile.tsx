@@ -91,7 +91,7 @@ const Dropdown = ({
           {(user?.role === "ADMIN" || user?.role === "SUPERADMIN") && (
             <>
               <DropdownMenuItem asChild>
-                <Link href="/stt" className="cursor-pointer">
+                <Link href="/blogs/create" className="cursor-pointer">
                   Buat Blog
                   <DropdownMenuShortcut>
                     <Images />
@@ -99,7 +99,7 @@ const Dropdown = ({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/event/create" className="cursor-pointer">
+                <Link href="/events/create" className="cursor-pointer">
                   Buat Event
                   <DropdownMenuShortcut>
                     <Calendar />
@@ -108,7 +108,6 @@ const Dropdown = ({
               </DropdownMenuItem>
             </>
           )}
-
           {user?.stt_membership && (
             <DropdownMenuItem variant="destructive" asChild>
               <Link href="/stt" className="cursor-pointer">

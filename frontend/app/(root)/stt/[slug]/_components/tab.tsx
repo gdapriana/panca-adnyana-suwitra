@@ -5,6 +5,7 @@ import { Stt } from "@/lib/types";
 import PageAnggota from "@/app/(root)/stt/[slug]/_components/page-anggota";
 import PageEvent from "@/app/(root)/stt/[slug]/_components/page-event";
 import PageStruktur from "@/app/(root)/stt/[slug]/_components/page-struktur";
+import PageBlog from "@/app/(root)/stt/[slug]/_components/page-blog";
 
 export default function TabContent({ stt }: { stt: Stt }) {
   const searchParams = useSearchParams();
@@ -12,7 +13,7 @@ export default function TabContent({ stt }: { stt: Stt }) {
 
   switch (tab) {
     case "blog":
-      return <div className="mt-4">Ini konten Blog</div>;
+      return <PageBlog blogs={stt.blogs} />;
     case "event":
       return <PageEvent stt={stt} />;
     case "struktur":

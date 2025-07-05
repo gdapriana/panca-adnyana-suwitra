@@ -10,7 +10,7 @@ export default async function SttPage({
 }: {
   params: { slug: string };
 }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stt/${slug}`, {
     next: { revalidate: 60 }, // atau cache: 'no-store'
@@ -30,7 +30,7 @@ export default async function SttPage({
   return (
     <main className="flex justify-center py-4 px-4 items-center">
       <div className="w-full max-w-6xl flex justify-center flex-col items-stretch">
-        <div className="flex mb-8 gap-1 justify-center items-center overflow-auto">
+        <div className="flex mb-8 gap-1 justify-center items-center flex-wrap">
           <Button className="flex-1" asChild variant="secondary">
             <Link href="?tab=blog">
               <Files /> Blog
