@@ -1,4 +1,5 @@
 "use client";
+import CreateBlogWYSIWYG from "@/app/(root)/blogs/_components/editor";
 import BlogWYSIWYG from "@/app/(root)/blogs/_components/editor";
 import CustomLoading from "@/app/_components/loading";
 import { Button } from "@/components/ui/button";
@@ -38,6 +39,8 @@ export default function BlogCreateForm() {
   }, [availableBlogCategories]);
 
   if (loading) return <CustomLoading />;
+
+  console.log({ body });
 
   return (
     <form className="flex w-full gap-6 flex-col md:flex-row md:items-stretch">
@@ -134,7 +137,7 @@ export default function BlogCreateForm() {
       </div>
       <div className="flex flex-1 flex-col justify-start items-stretch gap-2">
         <div className="flex-1">
-          <BlogWYSIWYG />
+          <CreateBlogWYSIWYG setBody={setBody} />
         </div>
         <Button type="submit">Buat Blog</Button>
       </div>

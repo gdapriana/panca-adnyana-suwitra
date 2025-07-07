@@ -1,8 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import dotenv from "dotenv";
-
-dotenv.config();
+import multer, { StorageEngine } from "multer";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -10,15 +8,16 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
+const folder: string = "pancaadnyanasuwitra";
+
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: async (req, file) => {
-    return {
-      folder: "pancaadnyanasuwitra",
-      allowed_formats: ["jpg", "jpeg", "png", "webp"],
-      transformation: [{ width: 1000, height: 1000, crop: "limit" }],
-    };
-  },
-});
+  params: async () => ({
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+    transformation: [{ width: 800, height: 800, crop: "limit" }],
+  }),
+}) as unknown as StorageEngine;
 
-export { cloudinary, storage };
+const upload = multer({ storage });
+
+export { cloudinary, upload, folder };
