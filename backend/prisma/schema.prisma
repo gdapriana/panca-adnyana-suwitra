@@ -13,16 +13,17 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  username        String          @unique
-  email           String
-  password        String
-  token           String?
-  name            String?
-  stt_membership  Stt_membership?
-  whatsapp_url    String?
-  instagram_url   String?
-  facebook_url    String?
-  profile_img_url String?
+  username              String          @unique
+  email                 String
+  password              String
+  token                 String?
+  name                  String?
+  stt_membership        Stt_membership?
+  whatsapp_url          String?
+  instagram_url         String?
+  facebook_url          String?
+  profile_img_url       String?
+  profile_img_public_id String?
 
   role ROLE @default(USER)
 
@@ -41,23 +42,27 @@ model Stt {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  name               String
-  slug               String  @unique
-  leader_username    String?
-  vice_username      String?
-  treasurer_username String?
-  secretary_username String?
-  logo_url           String?
-  description        String?
-  email              String?
-  instagram_url      String?
-  whatsapp_url       String?
-  facebook_url       String?
-  is_main            Boolean @default(false)
+  name                 String
+  slug                 String  @unique
+  leader_username      String?
+  vice_username        String?
+  treasurer_username   String?
+  secretary_username   String?
+  logo_url             String?
+  logo_public_id       String?
+  background_url       String?
+  background_public_id String?
+  description          String?
+  email                String?
+  instagram_url        String?
+  whatsapp_url         String?
+  facebook_url         String?
+  is_main              Boolean @default(false)
 
   stt_membership Stt_membership[]
   events         Event[]
   blogs          Blog[]
+  gallery        Gallery[]
   leader         User?            @relation("LeaderRelation", fields: [leader_username], references: [username])
   vice           User?            @relation("ViceRelation", fields: [vice_username], references: [username])
   treasurer      User?            @relation("TreasurerRelation", fields: [treasurer_username], references: [username])
@@ -72,13 +77,14 @@ model Blog {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  name          String
-  slug          String  @unique
-  category_slug String?
-  cover_url     String?
-  description   String?
-  body          String?
-  stt_slug      String?
+  name            String
+  slug            String  @unique
+  category_slug   String?
+  cover_url       String?
+  cover_public_id String?
+  description     String?
+  body            String?
+  stt_slug        String?
 
   category      Blog_category? @relation(fields: [category_slug], references: [slug])
   stt           Stt?           @relation(fields: [stt_slug], references: [slug])
@@ -163,6 +169,20 @@ model Join_request {
 
   user User @relation(fields: [username], references: [username])
   stt  Stt  @relation(fields: [stt_slug], references: [slug])
+}
+
+model Gallery {
+  id          String   @id @default(cuid())
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  url         String?
+  public_id   String?
+  description String?
+
+  stt_slug String?
+  Stt      Stt?    @relation(fields: [stt_slug], references: [slug])
+
+  @@map("gallery")
 }
 
 enum ROLE {

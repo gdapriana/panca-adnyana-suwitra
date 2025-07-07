@@ -4,13 +4,9 @@ export interface Navigation {
   children?: Navigation[];
 }
 
+
 export type Role = "USER" | "ADMIN" | "SUPERADMIN";
-export type MemberRole =
-  | "MEMBER"
-  | "LEADER"
-  | "VICE"
-  | "TREASURES"
-  | "SECRETARY";
+export type MemberRole = "MEMBER" | "LEADER" | "VICE" | "TREASURES" | "SECRETARY";
 
 export interface User {
   id: string;
@@ -26,6 +22,7 @@ export interface User {
   instagram_url?: string;
   facebook_url?: string;
   profile_img_url?: string;
+  profile_img_public_id?: string;
 
   role: Role;
 
@@ -59,6 +56,9 @@ export interface Stt {
   treasurer_username?: string;
   secretary_username?: string;
   logo_url?: string;
+  logo_public_id?: string;
+  background_url?: string;
+  background_public_id?: string;
   description?: string;
   email?: string;
   instagram_url?: string;
@@ -69,6 +69,7 @@ export interface Stt {
   stt_membership: SttMembership[];
   events: Event[];
   blogs: Blog[];
+  gallery: Gallery[];
   leader?: User;
   vice?: User;
   treasurer?: User;
@@ -79,6 +80,7 @@ export interface Stt {
     stt_membership: number;
     events: number;
     blogs: number;
+    gallery: number;
     Join_request: number;
   };
 }
@@ -92,6 +94,7 @@ export interface Blog {
   slug: string;
   category_slug?: string;
   cover_url?: string;
+  cover_public_id?: string;
   description?: string;
   body?: string;
   stt_slug?: string;
@@ -177,4 +180,17 @@ export interface JoinRequest {
 
   user: User;
   stt: Stt;
+}
+
+export interface Gallery {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+
+  url?: string;
+  public_id?: string;
+  description?: string;
+
+  stt_slug?: string;
+  Stt?: Stt;
 }

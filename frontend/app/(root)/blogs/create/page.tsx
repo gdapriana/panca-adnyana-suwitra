@@ -3,7 +3,7 @@
 import { useAuthContext } from "@/context/auth-context";
 import CustomLoading from "@/app/_components/loading";
 import { redirect } from "next/navigation";
-import BlogCreateForm from "@/app/(root)/blogs/create/_components/form";
+import BlogCreateForm from "@/app/(root)/blogs/create/_components/create-form";
 
 export default function CreateBlogPage() {
   const { authenticated, role, loading } = useAuthContext();

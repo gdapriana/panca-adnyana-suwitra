@@ -1,5 +1,7 @@
 "use client";
+import BlogWYSIWYG from "@/app/(root)/blogs/_components/editor";
 import CustomLoading from "@/app/_components/loading";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -38,8 +40,8 @@ export default function BlogCreateForm() {
   if (loading) return <CustomLoading />;
 
   return (
-    <form className="flex w-full flex-col md:flex-row">
-      <div className="flex flex-1 flex-col justify-start items-stretch gap-4">
+    <form className="flex w-full gap-6 flex-col md:flex-row md:items-stretch">
+      <div className="flex flex-1 flex-col justify-start items-stretch gap-6">
         <Label
           htmlFor="name"
           className="flex flex-col justify-start items-stretch gap-2"
@@ -47,6 +49,7 @@ export default function BlogCreateForm() {
           <span className="font-semibold">Nama Blog</span>
           <Input
             id="name"
+            onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Masukkan nama blog disini..."
           />
@@ -92,7 +95,7 @@ export default function BlogCreateForm() {
               value={coverUrl}
               onChange={(e) => {
                 setCoverUrl(e.target.value);
-                setCoverError(undefined); // Reset error saat user mengetik ulang
+                setCoverError(undefined);
               }}
             />
           </Label>
@@ -123,12 +126,18 @@ export default function BlogCreateForm() {
         >
           <span className="font-semibold">Deskripsi singkat blog</span>
           <Textarea
+            onChange={(e) => setDescription(e.target.value)}
             className="h-[200px]"
             placeholder="Deskripsi singkat blog disini"
           ></Textarea>
         </Label>
       </div>
-      <div className="flex flex-1 flex-col justify-start items-stretch gap-2"></div>
+      <div className="flex flex-1 flex-col justify-start items-stretch gap-2">
+        <div className="flex-1">
+          <BlogWYSIWYG />
+        </div>
+        <Button type="submit">Buat Blog</Button>
+      </div>
     </form>
   );
 }
