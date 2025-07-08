@@ -14,21 +14,30 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { fetchCategories } from "@/lib/api/blog-categories";
+import { fetchPostBlog } from "@/lib/api/blogs";
 import { BlogCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { Dispatch, useEffect, useState } from "react";
 
-export default function BlogCreateForm() {
+export default function BlogCreateForm({
+  token,
+  user_stt,
+}: {
+  token: string | undefined;
+  user_stt: string | undefined;
+}) {
   const [availableBlogCategories, setAvailableBlogCategories] =
     useState<BlogCategory[]>();
   const [name, setName] = useState<string>();
   const [category, setCategory] = useState<BlogCategory>();
   const [coverUrl, setCoverUrl] = useState<string>();
+  const [coverFile, setCoverFile] = useState<File>();
   const [description, setDescription] = useState<string>();
   const [body, setBody] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [coverError, setCoverError] = useState<string>();
+  const [cloudUrl, setCloudUrl] = useState<string>();
+  const [cloudUrlId, setCloudUrlId] = useState<string>();
 
   useEffect(() => {
     fetchCategories({ setLoading, setAvailableBlogCategories });
@@ -38,12 +47,38 @@ export default function BlogCreateForm() {
     setCategory(availableBlogCategories && availableBlogCategories[0]);
   }, [availableBlogCategories]);
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    await fetchPostBlog({
+      setLoading,
+      blogProps: {
+        name,
+        body,
+        category,
+        coverFile,
+        coverUrl,
+        description,
+      },
+      token: token!,
+      cloudUrl: {
+        cloudUrl,
+        setCloudUrl,
+      },
+      cloudUrlId: {
+        cloudUrlId,
+        setCloudUrlId,
+      },
+      user_stt: user_stt!,
+    });
+  };
+
   if (loading) return <CustomLoading />;
 
-  console.log({ body });
-
   return (
-    <form className="flex w-full gap-6 flex-col md:flex-row md:items-stretch">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full gap-6 flex-col md:flex-row md:items-stretch"
+    >
       <div className="flex flex-1 flex-col justify-start items-stretch gap-6">
         <Label
           htmlFor="name"

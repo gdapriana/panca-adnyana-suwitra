@@ -12,7 +12,7 @@ const CreateBlogWYSIWYG = ({
 }) => {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "<p>Hello World! 🌎️</p>",
+    content: "<p>Tulis <i>body</i> blog disini...</p>",
     onUpdate: ({ editor }) => {
       setBody(editor?.getText());
     },

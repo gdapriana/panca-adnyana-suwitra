@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import BlogCreateForm from "@/app/(root)/blogs/create/_components/create-form";
 
 export default function CreateBlogPage() {
-  const { authenticated, role, loading } = useAuthContext();
+  const { authenticated, role, loading, user } = useAuthContext();
 
   if (loading) return <CustomLoading />;
 
@@ -22,7 +22,10 @@ export default function CreateBlogPage() {
     <main className="flex justify-center py-4 px-4 items-center">
       <div className="w-full max-w-6xl flex justify-center flex-col items-stretch">
         {/* name category cover description body */}
-        <BlogCreateForm />
+        <BlogCreateForm
+          token={user?.token}
+          user_stt={user?.stt_membership?.stt_slug}
+        />
       </div>
     </main>
   );
