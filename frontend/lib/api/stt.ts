@@ -19,7 +19,7 @@ export const fetchSTT = async ({
     );
     const data = await response.json();
     if (!response.ok) {
-      toast.error(data.errors);
+      toast.error(JSON.stringify(data.errors));
       return;
     }
     setStt(data.data);

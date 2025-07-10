@@ -9,8 +9,19 @@ import { Calendar, Layers2 } from "lucide-react";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useAuthContext } from "@/context/auth-context";
+import CustomLoading from "@/app/_components/loading";
+import { BsGear } from "react-icons/bs";
 
-export default function PageBlog({ blogs }: { blogs: Blog[] }) {
+export default function PageBlog({
+  blogs,
+  stt_slug,
+}: {
+  blogs: Blog[];
+  stt_slug: string;
+}) {
+  const { authenticated, loading, role, user } = useAuthContext();
+  if (loading) return <CustomLoading />;
   return (
     <main className="flex gap-8 justify-center items-stretch flex-col">
       <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -49,7 +60,21 @@ export default function PageBlog({ blogs }: { blogs: Blog[] }) {
                 </Tooltip>
               </div>
 
-              <div className="flex justify-end gap-2 mt-auto items-center">
+              <div className="flex justify-end gap-2 flex-wrap mt-auto items-center">
+                {authenticated &&
+                  (role === "ADMIN" || role === "SUPERADMIN") &&
+                  user?.stt_membership?.stt_slug === stt_slug && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button asChild variant="secondary">
+                          <Link href={`/blogs/${blog.slug}/edit`}>
+                            <BsGear />
+                          </Link>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Edit blog</TooltipContent>
+                    </Tooltip>
+                  )}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button size="sm" variant="secondary" asChild>

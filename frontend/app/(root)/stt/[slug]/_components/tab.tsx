@@ -9,11 +9,11 @@ import PageBlog from "@/app/(root)/stt/[slug]/_components/page-blog";
 
 export default function TabContent({ stt }: { stt: Stt }) {
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab") || "blog"; // <-- default ke 'blog'
+  const tab = searchParams.get("tab") || "blog";
 
   switch (tab) {
     case "blog":
-      return <PageBlog blogs={stt.blogs} />;
+      return <PageBlog stt_slug={stt.slug} blogs={stt.blogs} />;
     case "event":
       return <PageEvent stt={stt} />;
     case "struktur":

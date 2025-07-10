@@ -14,7 +14,6 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: async () => ({
     allowed_formats: ["jpg", "jpeg", "png", "webp"],
-    transformation: [{ width: 800, height: 800, crop: "limit" }],
   }),
 }) as unknown as StorageEngine;
 

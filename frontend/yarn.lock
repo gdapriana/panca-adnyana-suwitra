@@ -879,6 +879,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-heading/-/extension-heading-2.24.2.tgz#37601582fdd0191ae186cb49033b6d4a26213947"
   integrity sha512-riUjAhiiSmdJupgRJFuHrDoXZrDpqjZYklsAcO/VyGRmp9z2Oz0LLlPTMotndCujYzGkH3jw2cz6bNo94jVoRQ==
 
+"@tiptap/extension-highlight@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-highlight/-/extension-highlight-2.25.1.tgz#d4b65534fceb74d80d7c9bb34946697a57270111"
+  integrity sha512-rDqkmjHBrXA37icZJ8b1JIKIGonvrL13ICHdpXS8z0c4crFDEfQxQTAFQkk3G65AQNcq4yruq/mD8NmXEHAqgw==
+
 "@tiptap/extension-history@^2.24.2":
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-history/-/extension-history-2.24.2.tgz#9ef838464f9cb2eef6889cc0066f8983acee57bb"
@@ -889,10 +894,22 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-horizontal-rule/-/extension-horizontal-rule-2.24.2.tgz#f4f9dc2574edbf5286ed161c036ed720a3451cf7"
   integrity sha512-gE0CsdOxy0zpfFtD4kTeqTEONB7EscE5zwGecuBZyrLEqk2R2b3cTM/IMDC95aknQ5YcqphlUGfVGhWiw3/USg==
 
+"@tiptap/extension-image@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-image/-/extension-image-2.25.1.tgz#67b823f42fedf2297c783c11278dd587555fbbd3"
+  integrity sha512-qV4GLYLUwjiotfRTd6Fe+1cwT1wJsTN1RsIw+gIYR+Qu18tRwWO4XgO3DsyCUKGzTiWccmX3vUpJkHsEIDLnWA==
+
 "@tiptap/extension-italic@^2.24.2":
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-italic/-/extension-italic-2.24.2.tgz#7e21b40667a55883e50849a7d1cd2a6c903df31a"
   integrity sha512-gW9c0zJh4f9D2uZl13rhV8FFt7UgISLiRp4e+DynpKUkhjftDHmruii5Qw6fz9W5cf/vQcyMwCN3lO7Efqnyng==
+
+"@tiptap/extension-link@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-link/-/extension-link-2.25.1.tgz#83e0020c365c14d6d6a41f657b6d982bdb63cb50"
+  integrity sha512-kEx/2fGAlv3le6EAUikz1febrBXjMsbaeHysaHrSi10ZwJpOPV6U07e/8xn7mf6Oifcvp185v3mIumLUtxpOhA==
+  dependencies:
+    linkifyjs "^4.2.0"
 
 "@tiptap/extension-list-item@^2.24.2":
   version "2.24.2"
@@ -913,6 +930,36 @@
   version "2.24.2"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-2.24.2.tgz#7620eebf56fb3ec7849e52837568e0fad7b3f831"
   integrity sha512-7JJ+IOTOoXlAqXDiUY9A+oRx01vRClvKuQzIDQoDtvd4Ut9rkZ+9L+Iv7AE/HzGkOOAVvfvLzYcyHiHDOpArDA==
+
+"@tiptap/extension-table-cell@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-cell/-/extension-table-cell-2.25.1.tgz#35fdad5faa5da45084045bbd08614d8244439665"
+  integrity sha512-ko8dsOdwZyBwV0tzfsWuhakPRDHIFGJM4d+o/mANewft8v6ROLg+4nvn9zLIcLwjDeZWAqKQXPpeOkQPe0Oa4w==
+
+"@tiptap/extension-table-header@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-header/-/extension-table-header-2.25.1.tgz#5f263f406a8c177bd77617991b9a328d641c003f"
+  integrity sha512-YPeUbF97uMvqXmn4GA1PpNhvq9BQrvS88qkB35YsvBEfY1Lu41lhx8cuCrpqBLUhccznFZDlh2xXCiwElBBjhg==
+
+"@tiptap/extension-table-row@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-row/-/extension-table-row-2.25.1.tgz#8fd3cfa43c0bbe66eebdfebb8ceaee2e1d2f519e"
+  integrity sha512-bpHIL52Ft4ZbFPpPANHyrKzoUr0iJ+YH7ZUIVmtVOz5EfIZ6p8AwZZ7LNY+u8gy/OktvlchzMqfonqoq6L3ZYw==
+
+"@tiptap/extension-table@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table/-/extension-table-2.25.1.tgz#36e5c7efcd4292be905256b53b73e63a8b0c1751"
+  integrity sha512-MWlvhiNQpnb23dDIrvTrDVGjE/PmHhqdWui7WJfyEvd/hZEpYI5NTZpeQASjd7CKI/OeSgR8bUGwW/l9oSsEqw==
+
+"@tiptap/extension-task-item@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-task-item/-/extension-task-item-2.25.1.tgz#71468dc0bb8d12f138aee44e94f50d15344ef69d"
+  integrity sha512-qfOiJtXfGeY0po87DXRikh+5+/D5hPKsb6fcheFzE+ITh7ZIqbBBGCjiKtyJUYKpCC5sprFrYInbPyES8nZT3A==
+
+"@tiptap/extension-task-list@^2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-task-list/-/extension-task-list-2.25.1.tgz#2666cd8e08680cdd4cea12625f184173c0c209b8"
+  integrity sha512-1MCxXj6KiogA+2JhXl5Hkjz7iTENjyBOXX0smZVlEBlyG2pjVfhksAUH/LnUJyKOrif0nTnYYQwVwm1BVHmCVQ==
 
 "@tiptap/extension-text-style@^2.24.2":
   version "2.24.2"
@@ -1251,6 +1298,11 @@ linkify-it@^5.0.0:
   integrity sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==
   dependencies:
     uc.micro "^2.0.0"
+
+linkifyjs@^4.2.0:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/linkifyjs/-/linkifyjs-4.3.1.tgz#1f246ebf4be040002accd1f4535b6af7c7e37898"
+  integrity sha512-DRSlB9DKVW04c4SUdGvKK5FR6be45lTU9M76JnngqPeeGDqPwYc0zdUErtsNVMtxPXgUWV4HbXbnC4sNyBxkYg==
 
 lodash.castarray@^4.4.0:
   version "4.4.0"

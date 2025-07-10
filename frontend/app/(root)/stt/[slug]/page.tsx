@@ -16,7 +16,7 @@ export default async function SttPage({
   const { slug } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stt/${slug}`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 5 },
   });
 
   if (!res.ok) {
