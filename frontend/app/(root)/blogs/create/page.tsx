@@ -21,9 +21,9 @@ export default function CreateBlogPage() {
   return (
     <main className="flex justify-center py-4 px-4 items-center">
       <div className="w-full max-w-6xl flex justify-center flex-col items-stretch">
-        {/* name category cover description body */}
         <BlogCreateForm
           token={user?.token}
+          user_role={user?.role}
           user_stt={user?.stt_membership?.stt_slug}
         />
       </div>

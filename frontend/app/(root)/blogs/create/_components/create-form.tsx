@@ -1,6 +1,6 @@
 "use client";
 import CreateBlogWYSIWYG from "@/app/(root)/blogs/_components/editor";
-import BlogWYSIWYG from "@/app/(root)/blogs/_components/editor";
+import BlogImagePreview from "@/app/(root)/blogs/create/_components/image-preview";
 import CustomLoading from "@/app/_components/loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,15 +15,17 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { fetchCategories } from "@/lib/api/blog-categories";
 import { fetchPostBlog } from "@/lib/api/blogs";
-import { BlogCategory } from "@/lib/types";
+import { BlogCategory, Role } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function BlogCreateForm({
   token,
+  user_role,
   user_stt,
 }: {
   token: string | undefined;
+  user_role: Role | undefined;
   user_stt: string | undefined;
 }) {
   const [availableBlogCategories, setAvailableBlogCategories] =
@@ -36,8 +38,6 @@ export default function BlogCreateForm({
   const [body, setBody] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [coverError, setCoverError] = useState<string>();
-  const [cloudUrl, setCloudUrl] = useState<string>();
-  const [cloudUrlId, setCloudUrlId] = useState<string>();
 
   useEffect(() => {
     fetchCategories({ setLoading, setAvailableBlogCategories });
@@ -50,6 +50,7 @@ export default function BlogCreateForm({
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await fetchPostBlog({
+      user_role,
       setLoading,
       blogProps: {
         name,
@@ -60,14 +61,6 @@ export default function BlogCreateForm({
         description,
       },
       token: token!,
-      cloudUrl: {
-        cloudUrl,
-        setCloudUrl,
-      },
-      cloudUrlId: {
-        cloudUrlId,
-        setCloudUrlId,
-      },
       user_stt: user_stt!,
     });
   };
@@ -157,6 +150,8 @@ export default function BlogCreateForm({
             </div>
           )}
         </div>
+
+        <BlogImagePreview coverFile={{ coverFile, setCoverFile }} />
 
         <Label
           htmlFor="description"

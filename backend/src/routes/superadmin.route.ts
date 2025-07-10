@@ -5,7 +5,6 @@ import SttController from "../controllers/stt.controller";
 import BlogController from "../controllers/blog.controller";
 import adminRoute from "./admin.route";
 import EventController from "../controllers/event.controller";
-import adminMiddleware from "../middleware/admin.middleware";
 
 const superAdminRoute = express.Router();
 
@@ -17,7 +16,13 @@ superAdminRoute.post(
   SttController.create,
 );
 
-// update stt
+//update STT
+adminRoute.patch(
+  "/api/mainstt/:slug",
+  userMiddleware,
+  superAdminMiddleware,
+  SttController.update,
+);
 // delete stt
 // create blog
 adminRoute.post(

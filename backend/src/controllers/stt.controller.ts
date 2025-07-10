@@ -29,6 +29,17 @@ class SttController {
       next(e);
     }
   }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body;
+      const { slug } = req.params;
+      const response = await SttService.update(body, slug);
+      res.status(200).json({ data: response });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export default SttController;

@@ -6,9 +6,12 @@ import superAdminRoute from "../routes/superadmin.route";
 import userRoute from "../routes/user.route";
 import cors from "cors";
 import cloudinaryRoute from "../routes/cloudinary.route";
+
 const web = express();
-web.use(express.json());
-web.use(cors({ origin: true }));
+web.use(express.json({
+  limit: '50mb'
+}));
+web.use(cors());
 web.use(publicRoute);
 web.use(userRoute);
 web.use(adminRoute);

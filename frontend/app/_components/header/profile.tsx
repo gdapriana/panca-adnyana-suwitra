@@ -4,6 +4,7 @@ import { useAuthContext } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
+  Building,
   Calendar,
   Images,
   ListCheck,
@@ -88,6 +89,17 @@ const Dropdown = ({
             </DropdownMenuItem>
           )}
 
+          {user?.stt_membership && (
+            <DropdownMenuItem asChild>
+              <Link href={`/stt/${user.stt_membership.stt_slug}`}>
+                Profile STT
+                <DropdownMenuShortcut>
+                  <Building />
+                </DropdownMenuShortcut>
+              </Link>
+            </DropdownMenuItem>
+          )}
+
           {(user?.role === "ADMIN" || user?.role === "SUPERADMIN") && (
             <>
               <DropdownMenuItem asChild>
@@ -108,16 +120,6 @@ const Dropdown = ({
               </DropdownMenuItem>
             </>
           )}
-          {user?.stt_membership && (
-            <DropdownMenuItem variant="destructive" asChild>
-              <Link href="/stt" className="cursor-pointer">
-                Keluar STT
-                <DropdownMenuShortcut>
-                  <LogOut />
-                </DropdownMenuShortcut>
-              </Link>
-            </DropdownMenuItem>
-          )}
           {user?.role === "ADMIN" && (
             <DropdownMenuItem asChild>
               <Link href="/request" className="cursor-pointer">
@@ -131,6 +133,16 @@ const Dropdown = ({
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          {user?.stt_membership && (
+            <DropdownMenuItem variant="destructive" asChild>
+              <Link href="/stt" className="cursor-pointer">
+                Keluar STT
+                <DropdownMenuShortcut>
+                  <LogOut />
+                </DropdownMenuShortcut>
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             onClick={logout}
             className="cursor-pointer"

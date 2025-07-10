@@ -5,6 +5,7 @@ import userMiddleware from "../middleware/user.middleware";
 import EventController from "../controllers/event.controller";
 import MembershipController from "../controllers/membership.controller";
 import JoinRequestController from "../controllers/join-request.controller";
+import SttController from "../controllers/stt.controller";
 
 const adminRoute = express.Router();
 
@@ -52,11 +53,11 @@ adminRoute.delete(
 );
 // acc join req
 adminRoute.patch(
-    '/api/accjoin/:request_id',
-    userMiddleware,
-    adminMiddleware,
-    JoinRequestController.acc
-)
+  "/api/accjoin/:request_id",
+  userMiddleware,
+  adminMiddleware,
+  JoinRequestController.acc,
+);
 // remove member
 adminRoute.delete(
   "/api/membership/:username",
@@ -67,18 +68,26 @@ adminRoute.delete(
 
 // get join req
 adminRoute.get(
-    '/api/accjoin',
-    userMiddleware,
-    adminMiddleware,
-    JoinRequestController.gets
-)
+  "/api/accjoin",
+  userMiddleware,
+  adminMiddleware,
+  JoinRequestController.gets,
+);
 
 // delete join req
 adminRoute.delete(
-    '/api/accjoin/:id',
-    userMiddleware,
-    adminMiddleware,
-    JoinRequestController.delete
-)
+  "/api/accjoin/:id",
+  userMiddleware,
+  adminMiddleware,
+  JoinRequestController.delete,
+);
+
+//update STT
+adminRoute.patch(
+  "/api/stt/:slug",
+  userMiddleware,
+  adminMiddleware,
+  SttController.update,
+);
 
 export default adminRoute;

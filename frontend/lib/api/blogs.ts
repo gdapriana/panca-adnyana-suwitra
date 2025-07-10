@@ -1,16 +1,16 @@
 import { destroy, upload } from "@/lib/api/cloudinary";
-import { BlogCategory } from "@/lib/types";
-import { Dispatch, SetStateAction, useState } from "react";
+import { BlogCategory, Role } from "@/lib/types";
+import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
 export const fetchPostBlog = async ({
+  user_role,
   setLoading,
   blogProps,
   token,
-  cloudUrl,
-  cloudUrlId,
   user_stt,
 }: {
+  user_role: Role | undefined;
   setLoading: Dispatch<SetStateAction<boolean>>;
   blogProps: {
     name: string | undefined;
@@ -21,52 +21,51 @@ export const fetchPostBlog = async ({
     body: string | undefined;
   };
   token: string;
-  cloudUrl: {
-    cloudUrl: string | undefined;
-    setCloudUrl: Dispatch<SetStateAction<string | undefined>>;
-  };
-  cloudUrlId: {
-    cloudUrlId: string | undefined;
-    setCloudUrlId: Dispatch<SetStateAction<string | undefined>>;
-  };
   user_stt: string;
 }) => {
+  let cloudResponse: { url: string; public_id: string } | undefined = undefined;
   try {
     setLoading(true);
     if (blogProps.coverFile) {
-      await upload({
+      cloudResponse = await upload({
         setLoading,
         selectedFile: blogProps.coverFile,
         token,
-        setCoverUrl: cloudUrl.setCloudUrl,
-        setCoverUrlId: cloudUrlId.setCloudUrlId,
       });
     }
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sttblog`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-TOKEN": token,
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${user_role === "ADMIN" ? "sttblog" : "mainsttblog"}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-TOKEN": token,
+        },
+        body: JSON.stringify({
+          name: blogProps.name,
+          category_slug: blogProps.category?.slug,
+          cover_url: cloudResponse?.url || blogProps.coverUrl,
+          cover_public_id: cloudResponse?.public_id,
+          description: blogProps.description,
+          body: blogProps.body,
+        }),
       },
-      body: JSON.stringify({
-        name: blogProps.name,
-        category_slug: blogProps.category?.slug,
-        cover_url: cloudUrl.cloudUrl || blogProps.coverUrl,
-        cover_public_id: cloudUrlId,
-        description: blogProps.description,
-        body: blogProps.body,
-      }),
-    });
+    );
     const data = await res.json();
     if (!res.ok) {
       toast.error(JSON.stringify(data.errors));
       return;
     }
-    toast.success("blog berhasil dibuat");
+    toast.success("blog berhasil dibuat, akan muncul beberapa saat");
     window.location.replace(`/stt/${user_stt}`);
   } catch (e) {
-    cloudUrlId.cloudUrlId &&
-      (await destroy({ token, public_id: cloudUrlId.cloudUrlId, setLoading }));
+    cloudResponse?.public_id &&
+      (await destroy({
+        token,
+        public_id: cloudResponse.public_id,
+        setLoading,
+      }));
     toast(JSON.stringify(e));
   } finally {
     setLoading(false);

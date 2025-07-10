@@ -1,9 +1,9 @@
 import prismaClient from "../application/database";
 import ResponseError from "../error/response.error";
-import { CreateSTT } from "../types/stt.types";
+import { CreateSTT, updateSTT } from "../types/stt.types";
 import Validation from "../validation/validation";
 import slugify from "slugify";
-import CreateSTTValidation from "../validation/stt.validation";
+import STTValidation from "../validation/stt.validation";
 import { SelectSTTAdmin } from "../utils/service.util";
 
 class SttService {
@@ -21,6 +21,7 @@ class SttService {
           select: {
             username: true,
             role: true,
+            join_date: true,
             user: {
               select: {
                 name: true,
@@ -113,7 +114,7 @@ class SttService {
   }
   static async create(body: CreateSTT) {
     const validatedRequest: CreateSTT = Validation.validate(
-      CreateSTTValidation.CREATE,
+      STTValidation.CREATE,
       body,
     );
     const slug = slugify(validatedRequest.name, { lower: true });
@@ -127,6 +128,49 @@ class SttService {
       data: {
         ...validatedRequest,
         slug,
+      },
+      select: {
+        name: true,
+      },
+    });
+    return stt;
+  }
+
+  static async update(body: updateSTT, slug: string) {
+    const checkSTT = await prismaClient.stt.findUnique({
+      where: {
+        slug,
+      },
+      select: {
+        slug: true,
+      },
+    });
+    if (!checkSTT) throw new ResponseError(404, "stt tidak ditemukan");
+    const validatedRequest: updateSTT = Validation.validate(
+      STTValidation.UPDATE,
+      body,
+    );
+
+    let newSlug: string | undefined = undefined;
+    if (validatedRequest.name) {
+      const tempSlug = slugify(validatedRequest.name, { lower: true });
+      const checkAvilable = await prismaClient.stt.findUnique({
+        where: {
+          slug: tempSlug,
+        },
+        select: { slug: true },
+      });
+      if (tempSlug) throw new ResponseError(401, "stt sudah ada");
+      newSlug = tempSlug;
+    }
+
+    const stt = await prismaClient.stt.update({
+      where: {
+        slug,
+      },
+      data: {
+        ...validatedRequest,
+        slug: newSlug,
       },
       select: {
         name: true,

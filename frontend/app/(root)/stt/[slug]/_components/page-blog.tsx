@@ -5,19 +5,19 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Calendar, Clock, Layers2 } from "lucide-react";
+import { Calendar, Layers2 } from "lucide-react";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function PageBlog({ blogs }: { blogs: Blog[] }) {
   return (
-    <main className="flex mt-4 gap-8 justify-center items-stretch flex-col">
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <main className="flex gap-8 justify-center items-stretch flex-col">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {blogs.map((blog: Blog, index: number) => {
           return (
             <article
-              className="flex justify-start gap-3 flex-col items-stretch"
+              className="flex p-3 rounded-3xl border justify-start gap-4 flex-col items-stretch"
               key={index}
             >
               {blog.cover_url ? (
@@ -26,7 +26,7 @@ export default function PageBlog({ blogs }: { blogs: Blog[] }) {
                   src={blog.cover_url}
                   width={1920}
                   height={1080}
-                  className="aspect-video rounded-lg"
+                  className="aspect-video object-cover rounded-xl"
                 />
               ) : (
                 <div className="bg-secondary rounded-lg w-full aspect-video flex justify-center items-center">
@@ -35,7 +35,7 @@ export default function PageBlog({ blogs }: { blogs: Blog[] }) {
                   </span>
                 </div>
               )}
-              <div className="flex flex-col justify-start items-start">
+              <div className="flex flex-col gap-2 justify-start items-start">
                 <h3 className="font-bold">{blog.name}</h3>
                 <p className="text-muted-foreground line-clamp-3 text-sm">
                   {blog.description}
@@ -49,7 +49,7 @@ export default function PageBlog({ blogs }: { blogs: Blog[] }) {
                 </Tooltip>
               </div>
 
-              <div className="flex justify-end gap-2 items-center">
+              <div className="flex justify-end gap-2 mt-auto items-center">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button size="sm" variant="secondary" asChild>

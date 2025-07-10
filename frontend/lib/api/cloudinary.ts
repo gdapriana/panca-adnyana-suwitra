@@ -5,14 +5,10 @@ export const upload = async ({
   setLoading,
   selectedFile,
   token,
-  setCoverUrl,
-  setCoverUrlId,
 }: {
   setLoading: Dispatch<SetStateAction<boolean>>;
   selectedFile: File | null;
   token: string;
-  setCoverUrl: Dispatch<SetStateAction<string | undefined>>;
-  setCoverUrlId: Dispatch<SetStateAction<string | undefined>>;
 }) => {
   try {
     setLoading(true);
@@ -22,7 +18,6 @@ export const upload = async ({
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "X-API-TOKEN": token,
       },
       body: formData,
@@ -32,8 +27,7 @@ export const upload = async ({
       toast.error(JSON.stringify(data.errors));
       return;
     }
-    setCoverUrl(data.data.imageUrl);
-    setCoverUrlId(data.data.publicId);
+    return { url: data.data.imageUrl, public_id: data.data.publicId };
   } catch (e) {
     toast(JSON.stringify(e));
   } finally {
@@ -47,7 +41,7 @@ export const destroy = async ({
   setLoading,
 }: {
   token: string;
-  public_id: string;
+  public_id: string | undefined;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }) => {
   try {
