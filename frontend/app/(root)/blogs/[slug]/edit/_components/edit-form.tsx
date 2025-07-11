@@ -8,7 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { fetchPatchBlog } from "@/lib/api/blogs";
 import { Blog, BlogCategory, Role } from "@/lib/types";
-import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 export default function BlogEditForm({
   token,
@@ -51,12 +57,16 @@ export default function BlogEditForm({
       user_role,
       blogProps: {
         name: name === blog?.name ? undefined : name,
-        category_slug: category?.slug === blog?.category?.slug ? undefined : category?.slug,
-        background_url: backgroundUrl === blog?.cover_url ? undefined : backgroundUrl,
+        category_slug:
+          category?.slug === blog?.category?.slug ? undefined : category?.slug,
+        background_url:
+          backgroundUrl === blog?.cover_url ? undefined : backgroundUrl,
         background_file: newImageFile,
-        description: description === blog?.description ? undefined : description,
+        description:
+          description === blog?.description ? undefined : description,
         body: body === blog?.body ? undefined : body,
-        background_public_id: backgroundId === blog?.cover_public_id ? undefined : backgroundId,
+        background_public_id:
+          backgroundId === blog?.cover_public_id ? undefined : backgroundId,
       },
       slug: blog?.slug || "",
       setLoading,
@@ -65,9 +75,15 @@ export default function BlogEditForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full gap-6 flex-col md:flex-row md:items-stretch">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full gap-6 flex-col md:flex-row md:items-stretch"
+    >
       <div className="flex flex-1 flex-col justify-start items-stretch gap-6">
-        <Label htmlFor="name" className="flex flex-col justify-start items-stretch gap-2">
+        <Label
+          htmlFor="name"
+          className="flex flex-col justify-start items-stretch gap-2"
+        >
           <span className="font-semibold">Nama Blog</span>
           <Input
             id="name"
@@ -78,12 +94,19 @@ export default function BlogEditForm({
           />
         </Label>
 
-        <InputCategory availableBlogCategories={availableCategories} category={category} setCategory={setCategory} />
+        <InputCategory
+          availableBlogCategories={availableCategories}
+          category={category}
+          setCategory={setCategory}
+        />
         <InputCover
           defaultImage={{ url: backgroundUrl, setUrl: setBackgroundUrl }}
           newImageFile={{ file: newImageFile, setFile: setNewImageFile }}
         />
-        <Label htmlFor="description" className="flex flex-col justify-start items-stretch gap-2">
+        <Label
+          htmlFor="description"
+          className="flex flex-col justify-start items-stretch gap-2"
+        >
           <span className="font-semibold">Deskripsi singkat blog</span>
           <Textarea
             defaultValue={description}
@@ -94,7 +117,11 @@ export default function BlogEditForm({
         </Label>
       </div>
       <div className="flex flex-1 flex-col justify-start items-stretch gap-6">
-        <div className="flex-1">{blog && <UpdateBlogWYSIWYG body={{ content: body, setContent: setBody }} />}</div>
+        <div className="flex-1">
+          {blog && (
+            <UpdateBlogWYSIWYG body={{ content: body, setContent: setBody }} />
+          )}
+        </div>
         <Button type="submit">Buat Blog</Button>
       </div>
     </form>

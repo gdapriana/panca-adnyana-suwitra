@@ -90,4 +90,12 @@ adminRoute.patch(
   SttController.update,
 );
 
+// delete membership
+adminRoute.delete(
+  "/api/membership/:username",
+  userMiddleware,
+  adminMiddleware,
+  MembershipController.delete,
+)
+
 export default adminRoute;

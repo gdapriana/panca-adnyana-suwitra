@@ -3,7 +3,7 @@ import { Stt } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Users } from "lucide-react";
+import { ChevronRight, ImageOff, Users } from "lucide-react";
 import ReqDialog from "@/app/(root)/stt/_components/req-dialog";
 import { useAuthContext } from "@/context/auth-context";
 import { Badge } from "@/components/ui/badge";
@@ -29,8 +29,8 @@ export default function Wrapper({ stt }: { stt: Stt[] }) {
             )}
             <div className="flex gap-4 justify-center items-center">
               <Avatar className="w-16 h-16">
-                <AvatarImage src={item.logo_url} />
-                <AvatarFallback>{item.slug.charAt(0)}</AvatarFallback>
+                <AvatarImage src={item.logo_url} className="object-cover" />
+                <AvatarFallback className="text-muted-foreground"><ImageOff width={16} /></AvatarFallback>
               </Avatar>
               <div className="flex-1 flex flex-col justify-center items-start">
                 <h3 className="text-xl font-bold">{item.name}</h3>

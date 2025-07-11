@@ -14,7 +14,11 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 
-const CreateBlogWYSIWYG = ({ setBody }: { setBody: Dispatch<SetStateAction<string | undefined>> }) => {
+const CreateBlogWYSIWYG = ({
+  setBody,
+}: {
+  setBody: Dispatch<SetStateAction<string | undefined>>;
+}) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -38,7 +42,10 @@ const CreateBlogWYSIWYG = ({ setBody }: { setBody: Dispatch<SetStateAction<strin
     <div className="p-4 border flex flex-col justify-start items-stretch rounded space-y-2 h-full">
       <EditorActtion editor={editor} />
       <div className="h-full overflow-auto">
-        <EditorContent editor={editor} className="prose overflow-auto border px-4 min-h-[200px] h-full" />
+        <EditorContent
+          editor={editor}
+          className="prose overflow-auto border px-4 min-h-[200px] h-full"
+        />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
+"use client";
 import { SttMembership, User } from "@/lib/types";
-import { Crown, UserX } from "lucide-react";
+import { Crown, Trash2, UserX } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -12,12 +13,22 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { BsFacebook, BsInstagram, BsWhatsapp } from "react-icons/bs";
 import moment from "moment";
+import { useAuthContext } from "@/context/auth-context";
+import CustomLoading from "@/app/_components/loading";
+import { Button } from "@/components/ui/button";
+import AlertDeleteAnggota from "@/app/(root)/stt/[slug]/_components/alert-delete-anggota";
+import { useState } from "react";
 
 export default function PageAnggota({
   memberships,
 }: {
   memberships: SttMembership[];
 }) {
+  const { authenticated, loading, role, user } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (loading || isLoading) return <CustomLoading />;
+
   return (
     <main className="flex justify-center items-stretch flex-col">
       {memberships.length === 0 && (
@@ -36,6 +47,9 @@ export default function PageAnggota({
               <TableHead>Sebagai</TableHead>
               <TableHead>Bergabung pada</TableHead>
               <TableHead>Sosial Media</TableHead>
+              {authenticated && (role === "ADMIN" || role === "SUPERADMIN") && (
+                <TableHead>Aksi</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -87,10 +101,17 @@ export default function PageAnggota({
                       </Badge>
                     )}
                   </TableCell>
+                  {authenticated &&
+                    (role === "ADMIN" || role === "SUPERADMIN") && (
+                      <TableCell>
+                        {member.role === "MEMBER" && (
+                          <AlertDeleteAnggota setLoading={setIsLoading} token={user?.token} username={member.username} />
+                        )}
+                      </TableCell>
+                    )}
                 </TableRow>
               );
             })}
-            <TableRow></TableRow>
           </TableBody>
         </Table>
       )}

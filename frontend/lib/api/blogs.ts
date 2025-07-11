@@ -14,7 +14,9 @@ export const fetchBlog = async ({
 }) => {
   try {
     setLoading(true);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/${slug}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blogs/${slug}`,
+    );
     const data = await response.json();
     if (!response.ok) {
       toast.error(JSON.stringify(data.errors));
@@ -59,21 +61,24 @@ export const fetchPostBlog = async ({
       });
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${user_role === "ADMIN" ? "sttblog" : "mainsttblog"}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-TOKEN": token,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${user_role === "ADMIN" ? "sttblog" : "mainsttblog"}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-TOKEN": token,
+        },
+        body: JSON.stringify({
+          name: blogProps.name,
+          category_slug: blogProps.category?.slug,
+          cover_url: cloudResponse?.url || blogProps.coverUrl,
+          cover_public_id: cloudResponse?.public_id,
+          description: blogProps.description,
+          body: blogProps.body,
+        }),
       },
-      body: JSON.stringify({
-        name: blogProps.name,
-        category_slug: blogProps.category?.slug,
-        cover_url: cloudResponse?.url || blogProps.coverUrl,
-        cover_public_id: cloudResponse?.public_id,
-        description: blogProps.description,
-        body: blogProps.body,
-      }),
-    });
+    );
     const data = await res.json();
     if (!res.ok) {
       toast.error(JSON.stringify(data.errors));
@@ -127,21 +132,28 @@ export const fetchPatchBlog = async ({
         token,
       });
     }
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${user_role === "ADMIN" ? "sttblog" : "mainsttblog"}/${slug}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-TOKEN": token,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${user_role === "ADMIN" ? "sttblog" : "mainsttblog"}/${slug}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-TOKEN": token,
+        },
+        body: JSON.stringify({
+          name: blogProps.name,
+          description: blogProps.description,
+          category_slug: blogProps.category_slug,
+          cover_url:
+            cloudResponse?.url || blogProps.background_url || undefined,
+          cover_public_id:
+            cloudResponse?.public_id ||
+            blogProps.background_public_id ||
+            undefined,
+          body: blogProps.body,
+        }),
       },
-      body: JSON.stringify({
-        name: blogProps.name,
-        description: blogProps.description,
-        category_slug: blogProps.category_slug,
-        cover_url: cloudResponse?.url || blogProps.background_url || undefined,
-        cover_public_id: cloudResponse?.public_id || blogProps.background_public_id || undefined,
-        body: blogProps.body,
-      }),
-    });
+    );
     const data = await res.json();
     if (!res.ok) {
       toast.error(JSON.stringify(data.errors));

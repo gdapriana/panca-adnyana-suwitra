@@ -5,7 +5,13 @@ import CustomLoading from "@/app/_components/loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { fetchCategories } from "@/lib/api/blog-categories";
 import { fetchPostBlog } from "@/lib/api/blogs";
@@ -22,7 +28,8 @@ export default function BlogCreateForm({
   user_role: Role | undefined;
   user_stt: string | undefined;
 }) {
-  const [availableBlogCategories, setAvailableBlogCategories] = useState<BlogCategory[]>();
+  const [availableBlogCategories, setAvailableBlogCategories] =
+    useState<BlogCategory[]>();
   const [name, setName] = useState<string>();
   const [category, setCategory] = useState<BlogCategory>();
   const [coverUrl, setCoverUrl] = useState<string>();
@@ -61,11 +68,22 @@ export default function BlogCreateForm({
   if (loading) return <CustomLoading />;
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full gap-6 flex-col md:flex-row md:items-stretch">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full gap-6 flex-col md:flex-row md:items-stretch"
+    >
       <div className="flex flex-1 flex-col justify-start items-stretch gap-6">
-        <Label htmlFor="name" className="flex flex-col justify-start items-stretch gap-2">
+        <Label
+          htmlFor="name"
+          className="flex flex-col justify-start items-stretch gap-2"
+        >
           <span className="font-semibold">Nama Blog</span>
-          <Input id="name" onChange={(e) => setName(e.target.value)} type="text" placeholder="Masukkan nama blog disini..." />
+          <Input
+            id="name"
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            placeholder="Masukkan nama blog disini..."
+          />
         </Label>
         <div className="flex flex-1 flex-col justify-start items-stretch gap-2">
           <Label className="flex flex-col justify-start items-stretch gap-2">
@@ -86,17 +104,27 @@ export default function BlogCreateForm({
               <img
                 src={coverUrl}
                 alt="Preview Cover"
-                className={cn("w-full max-h-60 object-cover rounded-md border shadow", coverError && "hidden")}
-                onError={() => setCoverError("Gambar tidak dapat dimuat. Periksa URL-nya.")}
+                className={cn(
+                  "w-full max-h-60 object-cover rounded-md border shadow",
+                  coverError && "hidden",
+                )}
+                onError={() =>
+                  setCoverError("Gambar tidak dapat dimuat. Periksa URL-nya.")
+                }
               />
-              {coverError && <p className="text-sm text-red-500 mt-1">{coverError}</p>}
+              {coverError && (
+                <p className="text-sm text-red-500 mt-1">{coverError}</p>
+              )}
             </div>
           )}
         </div>
 
         <BlogImagePreview coverFile={{ coverFile, setCoverFile }} />
 
-        <Label htmlFor="description" className="flex flex-col justify-start items-stretch gap-2">
+        <Label
+          htmlFor="description"
+          className="flex flex-col justify-start items-stretch gap-2"
+        >
           <span className="font-semibold">Deskripsi singkat blog</span>
           <Textarea
             onChange={(e) => setDescription(e.target.value)}

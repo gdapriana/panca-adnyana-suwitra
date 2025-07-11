@@ -9,10 +9,15 @@ import { Blog, BlogCategory } from "@/lib/types";
 import BlogEditForm from "@/app/(root)/blogs/[slug]/edit/_components/edit-form";
 import { fetchCategories } from "@/lib/api/blog-categories";
 
-export default function UpdateBlogPage({ params }: { params: Promise<{ slug: string }> }) {
+export default function UpdateBlogPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = use(params);
   const [blog, setBlog] = useState<Blog>();
-  const [availableBlogCategories, setAvailableBlogCategories] = useState<BlogCategory[]>();
+  const [availableBlogCategories, setAvailableBlogCategories] =
+    useState<BlogCategory[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { authenticated, role, loading, user } = useAuthContext();
 

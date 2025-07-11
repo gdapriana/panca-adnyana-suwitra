@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useAuthContext } from "@/context/auth-context";
 import { redirect } from "next/navigation";
 import { useState } from "react";
-import {Trash} from "lucide-react";
+import { Trash } from "lucide-react";
 
 export default function DeleteDialog({
   request,
@@ -60,11 +60,7 @@ export default function DeleteDialog({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          disabled={buttonDisabled}
-          size="sm"
-          className="cursor-pointer"
-        >
+        <Button disabled={buttonDisabled} size="sm" className="cursor-pointer">
           <Trash />
         </Button>
       </AlertDialogTrigger>

@@ -60,24 +60,36 @@ export default function editorAction({ editor }: { editor: Editor | null }) {
       <Button
         size="icon"
         type="button"
-        onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
-        variant={editor?.isActive("heading", { level: 1 }) ? "default" : "secondary"}
+        onClick={() =>
+          editor?.chain().focus().toggleHeading({ level: 1 }).run()
+        }
+        variant={
+          editor?.isActive("heading", { level: 1 }) ? "default" : "secondary"
+        }
       >
         <Heading1Icon />
       </Button>
       <Button
         size="icon"
         type="button"
-        onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-        variant={editor?.isActive("heading", { level: 2 }) ? "default" : "secondary"}
+        onClick={() =>
+          editor?.chain().focus().toggleHeading({ level: 2 }).run()
+        }
+        variant={
+          editor?.isActive("heading", { level: 2 }) ? "default" : "secondary"
+        }
       >
         <Heading2Icon />
       </Button>
       <Button
         size="icon"
         type="button"
-        onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
-        variant={editor?.isActive("heading", { level: 3 }) ? "default" : "secondary"}
+        onClick={() =>
+          editor?.chain().focus().toggleHeading({ level: 3 }).run()
+        }
+        variant={
+          editor?.isActive("heading", { level: 3 }) ? "default" : "secondary"
+        }
       >
         <Heading3Icon />
       </Button>
@@ -119,7 +131,12 @@ export default function editorAction({ editor }: { editor: Editor | null }) {
       >
         <QuoteIcon />
       </Button>
-      <Button type="button" size="icon" onClick={() => editor?.chain().focus().setHorizontalRule().run()} variant="secondary">
+      <Button
+        type="button"
+        size="icon"
+        onClick={() => editor?.chain().focus().setHorizontalRule().run()}
+        variant="secondary"
+      >
         <MinusIcon />
       </Button>
       <Button
@@ -132,10 +149,20 @@ export default function editorAction({ editor }: { editor: Editor | null }) {
       </Button>
 
       {/* Undo & Redo */}
-      <Button type="button" size="icon" onClick={() => editor?.chain().focus().undo().run()} variant="secondary">
+      <Button
+        type="button"
+        size="icon"
+        onClick={() => editor?.chain().focus().undo().run()}
+        variant="secondary"
+      >
         <Undo2Icon />
       </Button>
-      <Button type="button" size="icon" onClick={() => editor?.chain().focus().redo().run()} variant="secondary">
+      <Button
+        type="button"
+        size="icon"
+        onClick={() => editor?.chain().focus().redo().run()}
+        variant="secondary"
+      >
         <Redo2Icon />
       </Button>
 
@@ -143,7 +170,9 @@ export default function editorAction({ editor }: { editor: Editor | null }) {
       <Button
         type="button"
         size="icon"
-        onClick={() => editor?.chain().focus().unsetAllMarks().clearNodes().run()}
+        onClick={() =>
+          editor?.chain().focus().unsetAllMarks().clearNodes().run()
+        }
         variant="secondary"
       >
         <EraserIcon />
@@ -153,18 +182,39 @@ export default function editorAction({ editor }: { editor: Editor | null }) {
       <Button
         type="button"
         size="icon"
-        onClick={() => editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+        onClick={() =>
+          editor
+            ?.chain()
+            .focus()
+            .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+            .run()
+        }
         variant="secondary"
       >
         <TableIcon />
       </Button>
-      <Button type="button" size="icon" onClick={() => editor?.chain().focus().addColumnBefore().run()} variant="secondary">
+      <Button
+        type="button"
+        size="icon"
+        onClick={() => editor?.chain().focus().addColumnBefore().run()}
+        variant="secondary"
+      >
         <ColumnsIcon />
       </Button>
-      <Button type="button" size="icon" onClick={() => editor?.chain().focus().addRowBefore().run()} variant="secondary">
+      <Button
+        type="button"
+        size="icon"
+        onClick={() => editor?.chain().focus().addRowBefore().run()}
+        variant="secondary"
+      >
         <RowsIcon />
       </Button>
-      <Button type="button" size="icon" onClick={() => editor?.chain().focus().deleteTable().run()} variant="secondary">
+      <Button
+        type="button"
+        size="icon"
+        onClick={() => editor?.chain().focus().deleteTable().run()}
+        variant="secondary"
+      >
         <Trash2Icon />
       </Button>
 
@@ -187,7 +237,13 @@ export default function editorAction({ editor }: { editor: Editor | null }) {
         type="button"
         onClick={() => {
           const url = window.prompt("Masukkan URL:");
-          if (url) editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+          if (url)
+            editor
+              ?.chain()
+              .focus()
+              .extendMarkRange("link")
+              .setLink({ href: url })
+              .run();
         }}
         variant={editor?.isActive("link") ? "default" : "secondary"}
       >
