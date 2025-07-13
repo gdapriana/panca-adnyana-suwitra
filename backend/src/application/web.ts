@@ -8,9 +8,11 @@ import cors from "cors";
 import cloudinaryRoute from "../routes/cloudinary.route";
 
 const web = express();
-web.use(express.json({
-  limit: '50mb'
-}));
+web.use(
+  express.json({
+    limit: "50mb",
+  }),
+);
 web.use(cors());
 web.use(publicRoute);
 web.use(userRoute);

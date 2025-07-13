@@ -15,7 +15,15 @@ const userMiddleware = async (
         token: token,
       },
       include: {
-        stt_membership: true,
+        stt_membership: {
+          include: {
+            stt: {
+              select: {
+                name: true
+              }
+            }
+          }
+        },
       },
     });
 

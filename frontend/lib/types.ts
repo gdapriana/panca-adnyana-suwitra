@@ -20,6 +20,8 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  description?: string;
+  address?: string;
   token?: string;
   name?: string;
   whatsapp_url?: string;

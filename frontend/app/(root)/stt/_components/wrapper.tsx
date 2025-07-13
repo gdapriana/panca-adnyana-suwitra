@@ -30,7 +30,9 @@ export default function Wrapper({ stt }: { stt: Stt[] }) {
             <div className="flex gap-4 justify-center items-center">
               <Avatar className="w-16 h-16">
                 <AvatarImage src={item.logo_url} className="object-cover" />
-                <AvatarFallback className="text-muted-foreground"><ImageOff width={16} /></AvatarFallback>
+                <AvatarFallback className="text-muted-foreground">
+                  <ImageOff width={16} />
+                </AvatarFallback>
               </Avatar>
               <div className="flex-1 flex flex-col justify-center items-start">
                 <h3 className="text-xl font-bold">{item.name}</h3>

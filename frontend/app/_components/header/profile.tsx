@@ -11,7 +11,7 @@ import {
   LogIn,
   LogOut,
   Plus,
-  User2,
+  User as UserIcon,
   Users,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,7 +28,7 @@ import {
 import { User } from "@/lib/types";
 
 export default function Profile() {
-  const { authenticated, role, loading, user, logout } = useAuthContext();
+  const { authenticated, loading, user, logout } = useAuthContext();
 
   if (loading) return <Button>Loading</Button>;
   if (!authenticated)
@@ -68,6 +68,16 @@ const Dropdown = ({
         <DropdownMenuLabel>Aktifitas</DropdownMenuLabel>
 
         <DropdownMenuGroup>
+          {user && (
+            <DropdownMenuItem asChild>
+              <Link href="/profile" className="cursor-pointer">
+                Profil
+                <DropdownMenuShortcut>
+                  <UserIcon />
+                </DropdownMenuShortcut>
+              </Link>
+            </DropdownMenuItem>
+          )}
           {!user?.stt_membership && (
             <DropdownMenuItem asChild>
               <Link href="/stt" className="cursor-pointer">

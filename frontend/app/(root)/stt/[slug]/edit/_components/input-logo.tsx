@@ -34,7 +34,7 @@ export default function InputLogo({
   return (
     <div className="flex flex-col justify-start gap-1 items-stretch">
       <span>Logo</span>
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex flex-col md:flex-row justify-center items-center gap-2">
         <Input
           defaultValue={defaultImage.url || undefined}
           placeholder="url gambar"

@@ -4,6 +4,7 @@ import prismaClient from "../application/database";
 import ResponseError from "../error/response.error";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { UpdateUser } from "../types/user.types";
 
 class UserService {
   static async login(username: string, password: string) {
@@ -73,13 +74,6 @@ class UserService {
 
     const hashedPassword = await bcrypt.hash(validatedRequest.password, 10);
 
-    console.log({
-      username: validatedRequest.username,
-      password: hashedPassword,
-      name: validatedRequest.name,
-      email: validatedRequest.email,
-    });
-
     const user = await prismaClient.user.create({
       data: {
         username: validatedRequest.username,
@@ -94,6 +88,33 @@ class UserService {
 
     return user;
   }
+
+  static async update(username: string | undefined, body: UpdateUser) {
+    const validatedRequest = Validation.validate(UserValidation.UPDATE, body);
+    const user = await prismaClient.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    if (!user) throw new ResponseError(404, "pengguna tidak ditemukan");
+
+    const updatedUser = await prismaClient.user.update({
+      where: {
+        username,
+      },
+      data: validatedRequest,
+      select: {
+        username: true,
+      },
+    });
+
+    return updatedUser;
+  }
+
   static async logout(username: string) {
     const user = await prismaClient.user.update({
       where: {

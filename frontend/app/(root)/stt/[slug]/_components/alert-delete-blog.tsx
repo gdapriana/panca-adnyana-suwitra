@@ -8,29 +8,35 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { fetchDeleteMembership } from "@/lib/api/membership";
-import { Trash2 } from "lucide-react";
+import { fetchDeleteBlog } from "@/lib/api/blogs";
+import { Role } from "@/lib/types";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { BsTrash } from "react-icons/bs";
 import { toast } from "sonner";
 
-export default function AlertDeleteAnggota({
+export default function AlertDeleteBlog({
   setLoading,
-  username,
+  slug,
   token,
+  name,
+  role,
 }: {
   setLoading: Dispatch<SetStateAction<boolean>>;
-  username: string;
+  slug: string;
+  name: string;
   token: string | undefined;
+  role: Role | undefined;
 }) {
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const handleDelete = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await fetchDeleteMembership({
+      await fetchDeleteBlog({
         setLoading,
         token,
-        username,
+        slug,
+        role,
       });
       setButtonDisabled(true);
     } catch (error) {
@@ -43,14 +49,18 @@ export default function AlertDeleteAnggota({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="icon" variant="destructive" className="cursor-pointer">
-          <Trash2 />
+        <Button
+          variant="secondary"
+          className="cursor-pointer"
+          disabled={buttonDisabled}
+        >
+          <BsTrash />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
-        <AlertDialogTitle>Hapus anggota</AlertDialogTitle>
+        <AlertDialogTitle>Hapus blog</AlertDialogTitle>
         <p className="text-sm text-muted-foreground">
-          Apakah Anda yakin ingin menghapus {username}? Tindakan ini tidak dapat
+          Apakah Anda yakin ingin menghapus {name}? Tindakan ini tidak dapat
           dibatalkan.
         </p>
         <AlertDialogFooter>

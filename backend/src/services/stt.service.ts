@@ -1,6 +1,6 @@
 import prismaClient from "../application/database";
 import ResponseError from "../error/response.error";
-import { CreateSTT, updateSTT } from "../types/stt.types";
+import { CreateSTT, UpdateSTT } from "../types/stt.types";
 import Validation from "../validation/validation";
 import slugify from "slugify";
 import STTValidation from "../validation/stt.validation";
@@ -136,7 +136,7 @@ class SttService {
     return stt;
   }
 
-  static async update(body: updateSTT, slug: string) {
+  static async update(body: UpdateSTT, slug: string) {
     const checkSTT = await prismaClient.stt.findUnique({
       where: {
         slug,
@@ -146,7 +146,7 @@ class SttService {
       },
     });
     if (!checkSTT) throw new ResponseError(404, "stt tidak ditemukan");
-    const validatedRequest: updateSTT = Validation.validate(
+    const validatedRequest: UpdateSTT = Validation.validate(
       STTValidation.UPDATE,
       body,
     );

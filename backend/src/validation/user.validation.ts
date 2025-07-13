@@ -12,6 +12,18 @@ class UserValidation {
     name: z.string().min(3),
     email: z.string().email().min(1),
   });
+
+  static readonly UPDATE = z.object({
+    name: z.string().optional(),
+    email: z.string().email().optional(),
+    address: z.string().nullable().optional(),
+    description: z.string().nullable().optional(),
+    whatsapp_url: z.string().url().nullable().optional(),
+    instagram_url: z.string().url().nullable().optional(),
+    facebook_url: z.string().url().nullable().optional(),
+    profile_img_url: z.string().url().nullable().optional(),
+    profile_img_public_id: z.string().nullable().optional(),
+  });
 }
 
 export default UserValidation;

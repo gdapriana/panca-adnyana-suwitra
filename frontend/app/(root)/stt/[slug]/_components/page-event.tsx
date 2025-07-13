@@ -10,6 +10,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import moment from "moment";
+import Empty from "@/app/_components/empty";
+import { TbDatabaseOff } from "react-icons/tb";
 
 export default function PageEvent({ stt }: { stt: Stt }) {
   const [upcomingEvent, setUpcomingEvent] = useState<Event[]>([]);
@@ -56,7 +58,7 @@ export default function PageEvent({ stt }: { stt: Stt }) {
           <div className="bg-secondary h-[2px] flex-1"></div>
         </div>
 
-        {currentEvent.length !== 0 && (
+        {currentEvent.length !== 0 ? (
           <Accordion
             type="single"
             collapsible
@@ -85,6 +87,8 @@ export default function PageEvent({ stt }: { stt: Stt }) {
               );
             })}
           </Accordion>
+        ) : (
+          <Empty Icon={TbDatabaseOff} message="tidak ada acara berlangsung" />
         )}
       </div>
       <div className="flex flex-col gap-4 justify-start items-start">
@@ -92,7 +96,7 @@ export default function PageEvent({ stt }: { stt: Stt }) {
           <h2 className="font-bold text-xl">Acara yang akan Datang</h2>
           <div className="bg-secondary h-[2px] flex-1"></div>
         </div>
-        {upcomingEvent.length !== 0 && (
+        {upcomingEvent.length !== 0 ? (
           <Accordion
             type="single"
             collapsible
@@ -121,6 +125,8 @@ export default function PageEvent({ stt }: { stt: Stt }) {
               );
             })}
           </Accordion>
+        ) : (
+          <Empty Icon={TbDatabaseOff} message="tidak ada acara yang akan datang" />
         )}
       </div>
       <div className="flex flex-col gap-4 justify-start items-start">
@@ -128,7 +134,7 @@ export default function PageEvent({ stt }: { stt: Stt }) {
           <h2 className="font-bold text-xl">Acara yang sudah berlalu</h2>
           <div className="bg-secondary h-[2px] flex-1"></div>
         </div>
-        {pastEvent.length !== 0 && (
+        {pastEvent.length !== 0 ? (
           <Accordion
             type="single"
             collapsible
@@ -157,6 +163,8 @@ export default function PageEvent({ stt }: { stt: Stt }) {
               );
             })}
           </Accordion>
+        ) : (
+          <Empty Icon={TbDatabaseOff} message="tidak ada acara yang sudah berlalu" />
         )}
       </div>
     </main>

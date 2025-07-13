@@ -36,6 +36,17 @@ class UserController {
       next(e);
     }
   }
+  static async update(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const username = req.user?.username;
+      const body = req.body;
+      const response = await UserService.update(username, body);
+      res.status(200).json({ data: response });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   static async me(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const response = req.user;

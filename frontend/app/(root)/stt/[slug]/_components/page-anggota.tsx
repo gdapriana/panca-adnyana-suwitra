@@ -18,6 +18,8 @@ import CustomLoading from "@/app/_components/loading";
 import { Button } from "@/components/ui/button";
 import AlertDeleteAnggota from "@/app/(root)/stt/[slug]/_components/alert-delete-anggota";
 import { useState } from "react";
+import Empty from "@/app/_components/empty";
+import { TbDatabaseOff } from "react-icons/tb";
 
 export default function PageAnggota({
   memberships,
@@ -37,7 +39,7 @@ export default function PageAnggota({
         </div>
       )}
 
-      {memberships.length > 0 && (
+      {memberships.length > 0 ? (
         <Table>
           <TableHeader>
             <TableRow>
@@ -105,7 +107,11 @@ export default function PageAnggota({
                     (role === "ADMIN" || role === "SUPERADMIN") && (
                       <TableCell>
                         {member.role === "MEMBER" && (
-                          <AlertDeleteAnggota setLoading={setIsLoading} token={user?.token} username={member.username} />
+                          <AlertDeleteAnggota
+                            setLoading={setIsLoading}
+                            token={user?.token}
+                            username={member.username}
+                          />
                         )}
                       </TableCell>
                     )}
@@ -114,6 +120,8 @@ export default function PageAnggota({
             })}
           </TableBody>
         </Table>
+      ) : (
+          <Empty Icon={TbDatabaseOff} message="Tidak ada anggota" />
       )}
     </main>
   );

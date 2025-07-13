@@ -96,6 +96,6 @@ adminRoute.delete(
   userMiddleware,
   adminMiddleware,
   MembershipController.delete,
-)
+);
 
 export default adminRoute;

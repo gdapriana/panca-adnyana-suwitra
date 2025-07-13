@@ -181,3 +181,39 @@ export const fetchPatchBlog = async ({
     setLoading(false);
   }
 };
+
+export const fetchDeleteBlog = async ({
+  setLoading,
+  slug,
+  token,
+  role,
+}: {
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  slug: string;
+  token: string | undefined;
+  role: Role | undefined;
+}) => {
+  try {
+    setLoading(true);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${role === "ADMIN" ? "sttblog" : "mainsttblog"}/${slug}`,
+      {
+        method: "DELETE",
+        headers: {
+          "X-API-TOKEN": token!,
+        },
+      },
+    );
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error(JSON.stringify(data.errors));
+      return;
+    }
+    toast.success("Blog berhasil dihapus");
+    window.location.reload();
+  } catch (e) {
+    toast.error(JSON.stringify(e));
+  } finally {
+    setLoading(false);
+  }
+};

@@ -42,11 +42,6 @@ export default function Navigation({ stt }: { stt: Stt[] }) {
                   )}
                 >
                   {component.description}
-                  <div className="flex mt-2 justify-start gap-1 items-center">
-                    <Button variant="outline" size="sm">
-                      {component._count!.stt_membership} Anggota
-                    </Button>
-                  </div>
                 </ListItem>
               ))}
               <Button className="mt-auto cursor-pointer" asChild>

@@ -9,6 +9,7 @@ userRoute.post(
   userMiddleware,
   joinRequestController.create,
 );
+userRoute.patch("/api/update", userMiddleware, userController.update);
 userRoute.delete("/api/logout", userMiddleware, userController.logout);
 userRoute.get("/api/me", userMiddleware, userController.me);
 

@@ -11,7 +11,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
 import CustomLoading from "@/app/_components/loading";
-import { BsGear } from "react-icons/bs";
+import { BsArrowRight, BsGear, BsTrash } from "react-icons/bs";
+import AlertDeleteBlog from "@/app/(root)/stt/[slug]/_components/alert-delete-blog";
+import { useState } from "react";
+import Empty from "@/app/_components/empty";
+import { TbDatabaseOff } from "react-icons/tb";
 
 export default function PageBlog({
   blogs,
@@ -21,9 +25,13 @@ export default function PageBlog({
   stt_slug: string;
 }) {
   const { authenticated, loading, role, user } = useAuthContext();
-  if (loading) return <CustomLoading />;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  if (loading || isLoading) return <CustomLoading />;
   return (
     <main className="flex gap-8 justify-center items-stretch flex-col">
+      {blogs.length === 0 && (
+        <Empty Icon={TbDatabaseOff}  message="Tidak ada blog"/>
+      )}
       <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {blogs.map((blog: Blog, index: number) => {
           return (
@@ -64,16 +72,30 @@ export default function PageBlog({
                 {authenticated &&
                   (role === "ADMIN" || role === "SUPERADMIN") &&
                   user?.stt_membership?.stt_slug === stt_slug && (
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Button asChild variant="secondary">
-                          <Link href={`/blogs/${blog.slug}/edit`}>
-                            <BsGear />
-                          </Link>
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>Edit blog</TooltipContent>
-                    </Tooltip>
+                    <>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <AlertDeleteBlog
+                            role={role}
+                            name={blog.name}
+                            setLoading={setIsLoading}
+                            token={user.token}
+                            slug={blog.slug}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>Hapus Blog</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Button asChild variant="secondary">
+                            <Link href={`/blogs/${blog.slug}/edit`}>
+                              <BsGear />
+                            </Link>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Edit blog</TooltipContent>
+                      </Tooltip>
+                    </>
                   )}
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -87,7 +109,9 @@ export default function PageBlog({
                   <TooltipContent>Kategori blog</TooltipContent>
                 </Tooltip>
                 <Button size="sm" asChild>
-                  <Link href={`/blogs/${blog.slug}`}>Detail</Link>
+                  <Link href={`/blogs/${blog.slug}`}>
+                    <BsArrowRight />
+                  </Link>
                 </Button>
               </div>
             </article>

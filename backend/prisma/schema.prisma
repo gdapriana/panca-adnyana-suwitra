@@ -16,6 +16,8 @@ model User {
   username              String          @unique
   email                 String
   password              String
+  address               String?
+  description           String?
   token                 String?
   name                  String?
   stt_membership        Stt_membership?
