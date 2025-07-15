@@ -1,4 +1,4 @@
-export interface updateSTT {
+export interface UpdateSTT {
   name?: string;
   slug?: string;
   leader_username?: string;

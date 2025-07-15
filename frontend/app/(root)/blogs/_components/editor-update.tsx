@@ -15,47 +15,42 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 
 const UpdateBlogWYSIWYG = ({
-  body,
+	body,
 }: {
-  body: {
-    content: string | undefined;
-    setContent: Dispatch<SetStateAction<string | undefined>>;
-  };
+	body: {
+		content: string | undefined;
+		setContent: Dispatch<SetStateAction<string | undefined>>;
+	};
 }) => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Highlight,
-      Image,
-      Link,
-      TaskList,
-      TaskItem.configure({ nested: true }),
-      Table.configure({ resizable: true }),
-      TableRow,
-      TableHeader,
-      TableCell,
-    ],
-    onCreate: ({ editor }) => {
-      editor.commands.setContent(
-        body.content || "<p>Tulis <i>body</i> blog disini...</p>",
-      );
-    },
-    onUpdate: ({ editor }) => {
-      body.setContent(editor?.getHTML());
-    },
-  });
+	const editor = useEditor({
+		extensions: [
+			StarterKit,
+			Highlight,
+			Image,
+			Link,
+			TaskList,
+			TaskItem.configure({ nested: true }),
+			Table.configure({ resizable: true }),
+			TableRow,
+			TableHeader,
+			TableCell,
+		],
+		onCreate: ({ editor }) => {
+			editor.commands.setContent(body.content || "<p>Tulis <i>body</i> blog disini...</p>");
+		},
+		onUpdate: ({ editor }) => {
+			body.setContent(editor?.getHTML());
+		},
+	});
 
-  return (
-    <div className="p-4 border flex flex-col justify-start items-stretch rounded space-y-2 h-full">
-      <EditorActtion editor={editor} />
-      <div className="h-full overflow-auto">
-        <EditorContent
-          editor={editor}
-          className="prose overflow-auto border px-4 min-h-[200px] h-full"
-        />
-      </div>
-    </div>
-  );
+	return (
+		<div className="p-4 border flex flex-col justify-start items-stretch rounded space-y-2 h-full">
+			<EditorActtion editor={editor} />
+			<div className="h-full overflow-auto">
+				<EditorContent editor={editor} className="prose overflow-auto border px-4 min-h-[200px] h-full" />
+			</div>
+		</div>
+	);
 };
 
 export default UpdateBlogWYSIWYG;

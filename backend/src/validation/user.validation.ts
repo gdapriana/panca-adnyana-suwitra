@@ -18,9 +18,9 @@ class UserValidation {
     email: z.string().email().optional(),
     address: z.string().nullable().optional(),
     description: z.string().nullable().optional(),
-    whatsapp_url: z.string().url().nullable().optional(),
-    instagram_url: z.string().url().nullable().optional(),
-    facebook_url: z.string().url().nullable().optional(),
+    whatsapp_url: z.string().nullable().optional(),
+    instagram_url: z.string().nullable().optional(),
+    facebook_url: z.string().nullable().optional(),
     profile_img_url: z.string().url().nullable().optional(),
     profile_img_public_id: z.string().nullable().optional(),
   });
