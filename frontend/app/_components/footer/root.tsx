@@ -90,12 +90,12 @@ export default function Footer() {
 								<BsFacebook />
 							</Link>
 						</Button>
-						<Button asChild size="icon">
+						<Button asChild variant="secondary" size="icon">
 							<Link href="">
 								<BsInstagram />
 							</Link>
 						</Button>
-						<Button asChild size="icon">
+						<Button asChild variant="secondary" size="icon">
 							<Link href="">
 								<BsInstagram />
 							</Link>

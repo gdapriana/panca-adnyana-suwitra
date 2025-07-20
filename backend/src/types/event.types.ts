@@ -10,3 +10,7 @@ export interface UpdateEvent {
   end_date?: string;
   description?: string;
 }
+
+export interface QueryEvent {
+  take?: string;
+}

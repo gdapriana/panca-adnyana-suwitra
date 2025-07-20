@@ -13,6 +13,16 @@ class SttService {
         slug: slug,
       },
       include: {
+        gallery: {
+          select: {
+            id: true,
+            public_id: true,
+            stt_slug: true,
+            url: true,
+            description: true,
+            created_at: true,
+          },
+        },
         leader: SelectSTTAdmin,
         secretary: SelectSTTAdmin,
         treasurer: SelectSTTAdmin,

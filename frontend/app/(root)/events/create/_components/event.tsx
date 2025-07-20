@@ -34,7 +34,7 @@ export default function EventForm({ token, role }: { token: string; role: Role }
 
 		try {
 			setButtonDisabled(true);
-			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${role === "USER" ? "sttevent" : "mainsttevent"}`, {
+			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${role === "ADMIN" ? "sttevent" : "mainsttevent"}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

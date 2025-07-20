@@ -6,6 +6,7 @@ import EventController from "../controllers/event.controller";
 import MembershipController from "../controllers/membership.controller";
 import JoinRequestController from "../controllers/join-request.controller";
 import SttController from "../controllers/stt.controller";
+import GalleryController from "../controllers/gallery.controller";
 
 const adminRoute = express.Router();
 
@@ -96,6 +97,20 @@ adminRoute.delete(
   userMiddleware,
   adminMiddleware,
   MembershipController.delete,
+);
+
+adminRoute.post(
+  "/api/stt/:slug/gallery",
+  userMiddleware,
+  adminMiddleware,
+  GalleryController.create,
+);
+
+adminRoute.delete(
+  "/api/gallery/:id",
+  userMiddleware,
+  adminMiddleware,
+  GalleryController.delete,
 );
 
 export default adminRoute;

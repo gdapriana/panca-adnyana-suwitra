@@ -32,8 +32,17 @@ class CloudinaryController {
 
   static async bulkUpload(req: Request, res: Response, next: NextFunction) {
     try {
-    } catch (e) {
-      next(e);
+      const files = req.files as Express.Multer.File[];
+      if (!files || files.length === 0) {
+        throw new Error("No files uploaded");
+      }
+      const result = files.map((file) => ({
+        imageUrl: file.path,
+        publicId: file.filename,
+      }));
+      res.status(200).json({ data: result });
+    } catch (err) {
+      next(err);
     }
   }
   static async bulkDelete(req: Request, res: Response, next: NextFunction) {

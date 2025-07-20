@@ -64,3 +64,32 @@ export const destroy = async ({
 		setLoading(false);
 	}
 };
+
+export const bulkUpload = async ({
+	setLoading,
+	formData,
+	token,
+}: {
+	setLoading: Dispatch<SetStateAction<boolean>>;
+	formData: FormData;
+	token: string | undefined;
+}) => {
+	try {
+		setLoading(true);
+
+		const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bulk-upload`, {
+			method: "POST",
+			headers: {
+				"X-API-TOKEN": token!,
+			},
+			body: formData,
+		});
+
+		const data = await res.json();
+		return data.data;
+	} catch (e) {
+		toast.error(JSON.stringify(e));
+	} finally {
+		setLoading(false);
+	}
+};

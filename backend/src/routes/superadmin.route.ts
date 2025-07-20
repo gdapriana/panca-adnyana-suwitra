@@ -64,7 +64,7 @@ adminRoute.delete(
   "/api/mainsttevent/:slug",
   userMiddleware,
   superAdminMiddleware,
-  EventController.create,
+  EventController.delete,
 );
 
 export default superAdminRoute;

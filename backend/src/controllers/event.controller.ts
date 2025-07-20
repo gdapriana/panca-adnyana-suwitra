@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import BlogService from "../services/blog.service";
 import { UserRequest } from "../types/user.types";
 import EventService from "../services/event.service";
+import { QueryEvent } from "../types/event.types";
 
 class EventController {
   static async get(req: Request, res: Response, next: NextFunction) {
@@ -17,7 +18,8 @@ class EventController {
   }
   static async gets(req: Request, res: Response, next: NextFunction) {
     try {
-      const response = await EventService.gets();
+      const query: QueryEvent = req.query;
+      const response = await EventService.gets(query);
       res.status(200).json({
         data: response,
       });
@@ -61,7 +63,7 @@ class EventController {
       const { slug } = req.params;
       const stt_slug = req.user?.stt_membership!.stt_slug as string;
       if (!stt_slug) {
-        res.status(401).json({ errors: "should membership" });
+        res.status(401).json({ errors: "harus menjadi anggota" });
       }
       const response = await EventService.delete(slug, stt_slug);
       res.status(200).json({

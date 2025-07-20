@@ -1,4 +1,9 @@
-import { CreateBlog, UpdateBlog } from "../types/blog.types";
+import {
+  BlogQuery,
+  CommentBlog,
+  CreateBlog,
+  UpdateBlog,
+} from "../types/blog.types";
 import Validation from "../validation/validation";
 import BlogValidation from "../validation/blog.validation";
 import prismaClient from "../application/database";
@@ -27,11 +32,25 @@ class BlogService {
         },
         blog_comments: {
           select: {
+            id: true,
+            created_at: true,
             body: true,
+            username: true,
             user: {
               select: {
                 name: true,
+                profile_img_url: true,
                 username: true,
+                stt_membership: {
+                  select: {
+                    stt: {
+                      select: {
+                        name: true,
+                      },
+                    },
+                    role: true,
+                  },
+                },
               },
             },
           },
@@ -42,8 +61,15 @@ class BlogService {
     if (!blog) throw new ResponseError(404, "item not found");
     return blog;
   }
-  static async gets() {
+  static async gets(query: BlogQuery) {
+    const validateQuery: BlogQuery = Validation.validate(
+      BlogValidation.QUERY,
+      query,
+    );
     const blog = await prismaClient.blog.findMany({
+      where: {
+        name: validateQuery.name || undefined,
+      },
       include: {
         category: {
           select: {
@@ -58,8 +84,14 @@ class BlogService {
             slug: true,
           },
         },
+
         _count: true,
       },
+      orderBy: {
+        created_at: validateQuery.order === "latest" ? "asc" : undefined,
+        name: validateQuery.order === "name" ? "asc" : undefined,
+      },
+      take: Number(validateQuery.take) || undefined,
     });
     return blog;
   }
@@ -168,6 +200,53 @@ class BlogService {
       },
     });
     return blog;
+  }
+
+  static async comment(slug: string, body: CommentBlog, username: string) {
+    const validatedBody = Validation.validate(BlogValidation.COMMENT, body);
+    const checkBlog = await prismaClient.blog.findUnique({
+      where: { slug },
+      select: { slug: true },
+    });
+    if (!checkBlog) throw new ResponseError(404, "blog tidak ditemukan");
+    const comment = await prismaClient.blog_comment.create({
+      data: {
+        body: validatedBody.message,
+        blog_slug: slug,
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return comment;
+  }
+
+  static async uncomment(id: string, username: string) {
+    const checkId = await prismaClient.blog_comment.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        username: true,
+      },
+    });
+    if (!checkId) throw new ResponseError(404, "komen tidak ditemukan");
+    if (checkId.username !== username)
+      throw new ResponseError(403, "tidak diizinkan");
+
+    const deletedComment = await prismaClient.blog_comment.delete({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return deletedComment;
   }
 }
 

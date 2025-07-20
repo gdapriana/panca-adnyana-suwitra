@@ -3,7 +3,7 @@ import prismaClient from "../application/database";
 import slugify from "slugify";
 import ResponseError from "../error/response.error";
 import EventValidation from "../validation/event.validation";
-import { CreateEvent, UpdateEvent } from "../types/event.types";
+import { CreateEvent, QueryEvent, UpdateEvent } from "../types/event.types";
 
 class EventService {
   static async get(slug: string) {
@@ -25,7 +25,11 @@ class EventService {
     if (!event) throw new ResponseError(404, "item not found");
     return event;
   }
-  static async gets() {
+  static async gets(query: QueryEvent) {
+    const validatedQuery: QueryEvent = Validation.validate(
+      EventValidation.QUERY,
+      query,
+    );
     const event = await prismaClient.event.findMany({
       include: {
         stt: {
@@ -35,6 +39,10 @@ class EventService {
             slug: true,
           },
         },
+      },
+      take: Number(validatedQuery.take) || undefined,
+      orderBy: {
+        created_at: "desc",
       },
     });
     return event;

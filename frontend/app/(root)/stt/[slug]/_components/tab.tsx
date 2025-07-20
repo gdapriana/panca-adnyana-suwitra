@@ -6,6 +6,7 @@ import PageAnggota from "@/app/(root)/stt/[slug]/_components/page-anggota";
 import PageEvent from "@/app/(root)/stt/[slug]/_components/page-event";
 import PageStruktur from "@/app/(root)/stt/[slug]/_components/page-struktur";
 import PageBlog from "@/app/(root)/stt/[slug]/_components/page-blog";
+import PageGallery from "@/app/(root)/stt/[slug]/_components/page-galeri";
 
 export default function TabContent({ stt }: { stt: Stt }) {
 	const searchParams = useSearchParams();
@@ -20,6 +21,8 @@ export default function TabContent({ stt }: { stt: Stt }) {
 			return <PageStruktur stt={stt} />;
 		case "anggota":
 			return <PageAnggota stt_slug={stt.slug} memberships={stt.stt_membership} />;
+		case "galeri":
+			return <PageGallery gallery={stt.gallery} />;
 		default:
 			return <div className="mt-4">Tab tidak ditemukan.</div>;
 	}

@@ -14,3 +14,13 @@ export interface UpdateBlog {
   description?: string;
   body?: string;
 }
+
+export interface BlogQuery {
+  order?: "latest" | "name";
+  name?: string;
+  take?: string;
+}
+
+export interface CommentBlog {
+  message: string;
+}

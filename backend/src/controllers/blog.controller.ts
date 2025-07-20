@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import BlogService from "../services/blog.service";
 import { UserRequest } from "../types/user.types";
+import { BlogQuery } from "../types/blog.types";
 
 class BlogController {
   static async get(req: Request, res: Response, next: NextFunction) {
@@ -16,7 +17,8 @@ class BlogController {
   }
   static async gets(req: Request, res: Response, next: NextFunction) {
     try {
-      const response = await BlogService.gets();
+      const query: BlogQuery = req.query;
+      const response = await BlogService.gets(query);
       res.status(200).json({
         data: response,
       });
@@ -63,6 +65,33 @@ class BlogController {
         res.status(401).json({ errors: "should membership" });
       }
       const response = await BlogService.delete(slug, stt_slug);
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+  static async comment(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const body = req.body;
+      const { slug } = req.params;
+      const response = await BlogService.comment(
+        slug,
+        body,
+        req.user?.username!,
+      );
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+  static async uncomment(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const response = await BlogService.uncomment(id, req.user?.username!);
       res.status(200).json({
         data: response,
       });

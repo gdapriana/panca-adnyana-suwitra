@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Stt } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Calendar, Files, ImageOff, Network, Users } from "lucide-react";
+import { Calendar, Files, ImageOff, Images, Network, Users } from "lucide-react";
 import TabContent from "@/app/(root)/stt/[slug]/_components/tab";
 import UserActions from "@/app/(root)/stt/[slug]/_components/user-actions";
 import SttInformation from "@/app/(root)/stt/[slug]/_components/information";
@@ -81,6 +81,11 @@ export default async function SttPage({ params }: { params: { slug: string } }) 
 					<Button className="flex-1" asChild variant="secondary">
 						<Link href="?tab=anggota">
 							<Users /> Anggota
+						</Link>
+					</Button>
+					<Button className="flex-1" asChild variant="secondary">
+						<Link href="?tab=galeri">
+							<Images /> Galeri
 						</Link>
 					</Button>
 				</div>

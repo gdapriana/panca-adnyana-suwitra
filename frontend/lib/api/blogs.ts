@@ -202,3 +202,76 @@ export const fetchDeleteBlog = async ({
 		setLoading(false);
 	}
 };
+
+export const fetchPostComment = async ({
+	setLoading,
+	message,
+	token,
+	username,
+	slug,
+}: {
+	setLoading: Dispatch<SetStateAction<boolean>>;
+	message: string | undefined;
+	token: string | undefined;
+	username: string | undefined;
+	slug: string | undefined;
+}) => {
+	try {
+		setLoading(true);
+		const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/${slug}/comment`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-API-TOKEN": token!,
+			},
+			body: JSON.stringify({
+				message,
+			}),
+		});
+		const data = await res.json();
+		if (!res.ok) {
+			toast.error(JSON.stringify(data.errors));
+			return;
+		}
+
+		toast.success("Berhasil menambahkan komentar");
+		window.location.reload();
+	} catch (e) {
+		toast.error(JSON.stringify(e));
+	} finally {
+		setLoading(false);
+	}
+};
+
+export const fetchDeleteComment = async ({
+	setLoading,
+	id,
+	token,
+}: {
+	setLoading: Dispatch<SetStateAction<boolean>>;
+	id: string;
+	token: string | undefined;
+}) => {
+	try {
+		setLoading(true);
+		const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/comment/${id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				"X-API-TOKEN": token!,
+			},
+		});
+		const data = await res.json();
+		if (!res.ok) {
+			toast.error(JSON.stringify(data.errors));
+			return;
+		}
+
+		toast.success("Berhasil menghapus komentar");
+		window.location.reload();
+	} catch (e) {
+		toast.error(JSON.stringify(e));
+	} finally {
+		setLoading(false);
+	}
+};
