@@ -49,7 +49,7 @@ export default function AlertDeleteBlog({
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
-				<Button variant="secondary" className="cursor-pointer" disabled={buttonDisabled}>
+				<Button variant="destructive" className="cursor-pointer" disabled={buttonDisabled}>
 					<BsTrash />
 				</Button>
 			</AlertDialogTrigger>

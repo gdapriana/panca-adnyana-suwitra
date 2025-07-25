@@ -45,7 +45,7 @@ export default function Comments({ comments, slug }: { comments: BlogComment[]; 
 							>
 								<div className="flex justify-center items-start">
 									<Avatar className="w-12 h-12 ">
-										<AvatarImage src={comment.user.profile_img_url} />
+										<AvatarImage className="object-cover" src={comment.user.profile_img_url} />
 										<AvatarFallback className="text-muted-foreground">
 											<ImageOff width={12} />
 										</AvatarFallback>

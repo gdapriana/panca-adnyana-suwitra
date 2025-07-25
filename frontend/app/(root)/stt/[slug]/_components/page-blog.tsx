@@ -1,7 +1,7 @@
 import { Blog } from "@/lib/types";
 import Image from "next/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Calendar, Clock, ImageOff, Layers2 } from "lucide-react";
+import { ArrowRight, Calendar, Clock, ImageOff, Layers2 } from "lucide-react";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -61,37 +61,38 @@ export default function PageBlog({ blogs, stt_slug }: { blogs: Blog[]; stt_slug:
 										<TooltipContent>Kategori</TooltipContent>
 									</Tooltip>
 								</div>
+								<Button asChild className="mt-2">
+									<Link href={`/blogs/${blog.slug}`}>
+										Lihat Detail <ArrowRight />
+									</Link>
+								</Button>
 
-								<div className="flex justify-center items-center gap-2 mt-2">
-									{authenticated &&
-										(role === "ADMIN" || role === "SUPERADMIN") &&
-										user?.stt_membership?.stt_slug === stt_slug && (
-											<>
-												<Tooltip>
-													<TooltipTrigger asChild>
-														<AlertDeleteBlog
-															role={role}
-															name={blog.name}
-															setLoading={setIsLoading}
-															token={user.token}
-															slug={blog.slug}
-														/>
-													</TooltipTrigger>
-													<TooltipContent>Hapus Blog</TooltipContent>
-												</Tooltip>
-												<Tooltip>
-													<TooltipTrigger asChild>
-														<Button asChild variant="secondary">
-															<Link href={`/blogs/${blog.slug}/edit`}>
-																<BsGear />
-															</Link>
-														</Button>
-													</TooltipTrigger>
-													<TooltipContent>Edit blog</TooltipContent>
-												</Tooltip>
-											</>
-										)}
-								</div>
+								{authenticated && (role === "ADMIN" || role === "SUPERADMIN") && user?.stt_membership?.stt_slug === stt_slug && (
+									<div className="m-2 flex justify-end gap-2 items-center flex-wrap">
+										<Tooltip>
+											<TooltipTrigger asChild>
+												<AlertDeleteBlog
+													role={role}
+													name={blog.name}
+													setLoading={setIsLoading}
+													token={user.token}
+													slug={blog.slug}
+												/>
+											</TooltipTrigger>
+											<TooltipContent>Hapus Blog</TooltipContent>
+										</Tooltip>
+										<Tooltip>
+											<TooltipTrigger asChild>
+												<Button asChild variant="secondary">
+													<Link href={`/blogs/${blog.slug}/edit`}>
+														<BsGear />
+													</Link>
+												</Button>
+											</TooltipTrigger>
+											<TooltipContent>Edit blog</TooltipContent>
+										</Tooltip>
+									</div>
+								)}
 							</div>
 						</article>
 					);
